@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="vox_populi_trainer.MainPage"
+             BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#A855F7" Offset="0.0" />
+            <GradientStop Color="#7E22CE" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <Style x:Key="AnimatedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryGradient}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#A855F7" Opacity="0.5" Radius="25" Offset="0,8" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="1.0" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="1.05" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale" Value="0.95" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Spacing="35"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center">
+
+        <Border StrokeShape="RoundRectangle 40"
+                HeightRequest="80"
+                WidthRequest="80"
+                Background="{StaticResource PrimaryGradient}"
+                StrokeThickness="0"
+                HorizontalOptions="Center">
+            <Border.Shadow>
+                <Shadow Brush="#A855F7" Opacity="0.3" Radius="20" Offset="0,5" />
+            </Border.Shadow>
+            <Image Source="mic_icon.png" 
+                   HeightRequest="35" 
+                   WidthRequest="35" 
+                   VerticalOptions="Center" 
+                   HorizontalOptions="Center"/>
+        </Border>
+
+        <Label Text="Vox Populi 4.0"
+               FontSize="34"
+               TextColor="#8B3DFF"
+               HorizontalOptions="Center" />
+
+        <Button Text="Commencer"
+                Command="{Binding StartCommand}"
+                Style="{StaticResource AnimatedButtonStyle}"
+                WidthRequest="220"
+                HeightRequest="55"
+                FontSize="16"
+                HorizontalOptions="Center" />
+
+    </VerticalStackLayout>
+
+</ContentPage>
