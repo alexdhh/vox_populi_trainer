@@ -58,7 +58,7 @@
             <Border.Shadow>
                 <Shadow Brush="#A855F7" Opacity="0.3" Radius="20" Offset="0,5" />
             </Border.Shadow>
-            <Image Source="mic_icon.png" 
+            <Image Source="brain_icon.png" 
                    HeightRequest="35" 
                    WidthRequest="35" 
                    VerticalOptions="Center" 

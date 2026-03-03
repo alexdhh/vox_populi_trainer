@@ -10,6 +10,7 @@
 
             Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
             Routing.RegisterRoute(nameof(ChoicePage), typeof(ChoicePage));
+            Routing.RegisterRoute(nameof(CreateModelPage), typeof(CreateModelPage));
         }
     }
 }

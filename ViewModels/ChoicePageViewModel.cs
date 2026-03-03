@@ -5,14 +5,13 @@ public partial class ChoicePageViewModel : BaseViewModel
     [RelayCommand]
     private async Task Return()
     {
-        // Retour à la page d'accueil
         await Shell.Current.GoToAsync("///MainPage");
     }
 
     [RelayCommand]
     private async Task NavigateToCreateModel()
     {
-        // à faire
+        await Shell.Current.GoToAsync(nameof(CreateModelPage));
     }
 
     [RelayCommand]

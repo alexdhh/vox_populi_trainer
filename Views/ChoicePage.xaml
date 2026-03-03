@@ -60,7 +60,7 @@
                     <Shadow Brush="Transparent" Opacity="0" Radius="30" Offset="0,10" />
                 </Border.Shadow>
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding CreateModelCommand}" />
+                    <TapGestureRecognizer Command="{Binding NavigateToCreateModelCommand}" />
                     <PointerGestureRecognizer PointerEntered="OnCardPointerEntered" PointerExited="OnCardPointerExited" />
                 </Border.GestureRecognizers>
 
@@ -84,7 +84,7 @@
                     <Shadow Brush="Transparent" Opacity="0" Radius="30" Offset="0,10" />
                 </Border.Shadow>
                 <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding CustomizeModelCommand}" />
+                    <TapGestureRecognizer Command="{Binding NavigateToCustomizeModelCommand}" />
                     <PointerGestureRecognizer PointerEntered="OnCardPointerEntered" PointerExited="OnCardPointerExited" />
                 </Border.GestureRecognizers>
 
