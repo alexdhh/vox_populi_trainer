@@ -5,6 +5,11 @@
         public AppShell()
         {
             InitializeComponent();
+
+            // Navigation
+
+            Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+            Routing.RegisterRoute(nameof(ChoicePage), typeof(ChoicePage));
         }
     }
 }

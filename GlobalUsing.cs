@@ -31,5 +31,8 @@ global using CommunityToolkit.Mvvm.Input;
 global using CommunityToolkit.Mvvm.Messaging;
 global using CommunityToolkit.Mvvm.Messaging.Messages;
 global using CommunityToolkit.Maui;
+global using Microsoft.Maui.Controls.Shapes;
+global using Microsoft.Maui.Controls.Xaml;
 
 global using vox_populi_trainer.ViewModels;
+global using vox_populi_trainer.Views;
