@@ -25,7 +25,7 @@
         }
 
         [RelayCommand]
-        private async Task ImportDataset()
+        private async Task ImportDatasetAsync()
         {
             try
             {
@@ -56,7 +56,7 @@
         }
 
         [RelayCommand]
-        private async Task StartTraining()
+        private async Task StartTrainingAsync()
         {
             System.Diagnostics.Debug.WriteLine("Début de l'entraînement avec le fichier : " + UploadText);
         }

@@ -17,7 +17,7 @@
             <HorizontalStackLayout Spacing="8" HorizontalOptions="Start" AnchorX="0" Margin="10,0,0,20">
                 <HorizontalStackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ReturnCommand}" />
-                    <PointerGestureRecognizer PointerEntered="OnReturnPointerEntered" PointerExited="OnReturnPointerExited" />
+                    <PointerGestureRecognizer PointerEntered="OnBackPointerEntered" PointerExited="OnBackPointerExited" />
                 </HorizontalStackLayout.GestureRecognizers>
                 <Label x:Name="BackIcon" Text="←" FontSize="18" TextColor="#4B5563" VerticalOptions="Center"/>
                 <Label x:Name="BackText" Text="Retour" FontSize="16" TextColor="#4B5563" VerticalOptions="Center"/>
@@ -36,21 +36,40 @@
                 <Label Text="Importer un dataset" FontSize="16" TextColor="Black" VerticalOptions="Center"/>
             </HorizontalStackLayout>
 
-            <Border StrokeShape="RoundRectangle 12" 
-                    Stroke="#D1D5DB" StrokeThickness="1" StrokeDashArray="4,4" 
-                    BackgroundColor="White" Padding="40" WidthRequest="600" HeightRequest="180">
+            <Border x:Name="UploadBorder" StrokeShape="RoundRectangle 12" Stroke="#D1D5DB" StrokeThickness="1" StrokeDashArray="4,4" BackgroundColor="White" Padding="40" WidthRequest="600" HeightRequest="180">
+
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border" Binding="{Binding IsFileLoaded}" Value="True">
+                        <Setter Property="Stroke" Value="#A855F7" />
+                        <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                    </DataTrigger>
+                </Border.Triggers>
+
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ImportDatasetCommand}" />
                     <PointerGestureRecognizer PointerEntered="OnUploadPointerEntered" PointerExited="OnUploadPointerExited" />
                     <DropGestureRecognizer AllowDrop="True" Drop="OnDrop" />
                 </Border.GestureRecognizers>
 
-                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
-                    <Border StrokeShape="RoundRectangle 8" BackgroundColor="#F3F4F6" HeightRequest="40" WidthRequest="40" StrokeThickness="0" HorizontalOptions="Center">
-                        <Image Source="upload_icon.png" HeightRequest="20" WidthRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <VerticalStackLayout InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+
+                    <Border x:Name="IconContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#F3F4F6" HeightRequest="64" WidthRequest="64" StrokeThickness="0" HorizontalOptions="Center">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsFileLoaded}" Value="True">
+                                <Setter Property="BackgroundColor" Value="#8B3DFF" />
+                            </DataTrigger>
+                        </Border.Triggers>
+
+                        <Image x:Name="UploadIcon" Source="icon_upload.png" HeightRequest="32" WidthRequest="32" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{Binding IsFileLoaded}" Value="True">
+                                    <Setter Property="Source" Value="succes_icon.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
                     </Border>
 
-                    <Label Text="{Binding UploadText}" FontSize="16" TextColor="#4B5563" HorizontalOptions="Center" />
+                    <Label Text="{Binding UploadText}" FontSize="16" TextColor="#4B5563" FontAttributes="Bold" HorizontalOptions="Center" />
                     <Label Text="{Binding SubText}" FontSize="12" TextColor="#9CA3AF" HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </Border>
