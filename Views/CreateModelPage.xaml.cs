@@ -36,6 +36,11 @@ public partial class CreateModelPage : ContentPage
                         border.Stroke = Color.FromArgb("#E5E7EB");
                     }
                 }
+
+                if (viewModel.SelectedTimeOption == "custom" && CustomTimeEntry != null)
+                {
+                    CustomTimeEntry.Focus();
+                }
             }
         };  
     }
@@ -133,6 +138,17 @@ public partial class CreateModelPage : ContentPage
             if (border.BackgroundColor != Color.FromArgb("#FBF5FF"))
             {
                 border.Stroke = Color.FromArgb("#E5E7EB");
+            }
+        }
+    }
+
+    private void OnCustomTimeEntryFocused(object sender, FocusEventArgs e)
+    {
+        if (BindingContext is CreateModelPageViewModel viewModel)
+        {
+            if (viewModel.SelectedTimeOption != "custom")
+            {
+                viewModel.SelectedTimeOption = "custom";
             }
         }
     }

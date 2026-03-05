@@ -29,9 +29,9 @@
         }
 
         [RelayCommand]
-        private async Task GoBackAsync()
+        private async Task ReturnAsync()
         {
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync(nameof(ChoicePage));
         }
 
         [RelayCommand]

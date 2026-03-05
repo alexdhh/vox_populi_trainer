@@ -55,7 +55,7 @@
                                     <Image x:Name="UploadIcon" Source="icon_upload.png" HeightRequest="32" WidthRequest="32" HorizontalOptions="Center" VerticalOptions="Center">
                                         <Image.Triggers>
                                             <DataTrigger TargetType="Image" Binding="{Binding IsFileLoaded}" Value="True">
-                                                <Setter Property="Source" Value="icon_success.png" />
+                                                <Setter Property="Source" Value="succes_icon.png" />
                                             </DataTrigger>
                                         </Image.Triggers>
                                     </Image>
@@ -665,7 +665,32 @@
                                 </VerticalStackLayout>
 
                                 <HorizontalStackLayout HorizontalOptions="Start" Margin="50,55,0,20" Spacing="10" InputTransparent="False">
-                                    <Entry Placeholder="Entrez le temps" Text="{Binding CustomTimeInput}" Keyboard="Numeric" WidthRequest="200" BackgroundColor="White" />
+                                    <Grid>
+                                        <Entry x:Name="CustomTimeEntry" 
+                                               Placeholder="Entrez le temps" 
+                                               Text="{Binding CustomTimeInput}" 
+                                               Keyboard="Numeric" 
+                                               WidthRequest="200" 
+                                               BackgroundColor="White"
+                                               IsEnabled="False">
+                                            <Entry.Triggers>
+                                                <DataTrigger TargetType="Entry" Binding="{Binding SelectedTimeOption}" Value="custom">
+                                                    <Setter Property="IsEnabled" Value="True" />
+                                                </DataTrigger>
+                                            </Entry.Triggers>
+                                        </Entry>
+
+                                        <BoxView BackgroundColor="Transparent">
+                                            <BoxView.Triggers>
+                                                <DataTrigger TargetType="BoxView" Binding="{Binding SelectedTimeOption}" Value="custom">
+                                                    <Setter Property="IsVisible" Value="False" />
+                                                </DataTrigger>
+                                            </BoxView.Triggers>
+                                            <BoxView.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding SelectTimeCommand}" CommandParameter="custom" />
+                                            </BoxView.GestureRecognizers>
+                                        </BoxView>
+                                    </Grid>
                                     <Label Text="secondes" VerticalOptions="Center" TextColor="#6B7280" />
                                 </HorizontalStackLayout>
                             </Grid>
