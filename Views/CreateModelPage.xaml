@@ -461,7 +461,7 @@
                                             </Ellipse.Triggers>
                                         </Ellipse>
                                     </Border>
-                                    <Label Text="30 minutes" FontSize="15" VerticalOptions="Center">
+                                    <Label Text="30 minutes" FontSize="15" TextColor="#1F2937" VerticalOptions="Center">
                                     </Label>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -501,7 +501,7 @@
                                             </Ellipse.Triggers>
                                         </Ellipse>
                                     </Border>
-                                    <Label Text="1 heure" FontSize="15" VerticalOptions="Center">
+                                    <Label Text="1 heure" FontSize="15" TextColor="#1F2937" VerticalOptions="Center">
                                     </Label>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -541,7 +541,7 @@
                                             </Ellipse.Triggers>
                                         </Ellipse>
                                     </Border>
-                                    <Label Text="2 heures" FontSize="15" VerticalOptions="Center">
+                                    <Label Text="2 heures" FontSize="15" TextColor="#1F2937" VerticalOptions="Center">
                                     </Label>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -581,7 +581,7 @@
                                             </Ellipse.Triggers>
                                         </Ellipse>
                                     </Border>
-                                    <Label Text="4 heures" FontSize="15" VerticalOptions="Center">
+                                    <Label Text="4 heures" FontSize="15" TextColor="#1F2937" VerticalOptions="Center">
                                     </Label>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -629,8 +629,7 @@
                                                 </Ellipse.Triggers>
                                             </Ellipse>
                                         </Border>
-                                        <Label Text="Durée personnalisée" FontSize="15" VerticalOptions="Center">
-                                        </Label>
+                                        <Label Text="Durée personnalisée" FontSize="15" TextColor="#1F2937" VerticalOptions="Center" />
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
 
@@ -680,8 +679,37 @@
                             HeightRequest="55"
                             FontSize="16"
                             Margin="0,30,0,0"
-                            HorizontalOptions="Center" />
+                            HorizontalOptions="Center">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsTrainingStarted}" Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </VerticalStackLayout>
 
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsTrainingStarted}">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="4" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Entraîner le modèle" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White" WidthRequest="600" Padding="50">
+                        <VerticalStackLayout Spacing="25" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="450">
+
+                            <Label Text="{Binding ProgressPercentage}" FontSize="32" TextColor="#8B3DFF" FontAttributes="Bold" HorizontalOptions="Center" />
+
+                            <ProgressBar Progress="{Binding TrainingProgress}" ProgressColor="#8B3DFF" HeightRequest="12" />
+
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center" Margin="0,15,0,0">
+                                <Label Text="{Binding TrainingStatusText}" FontSize="16" TextColor="#1F2937" HorizontalOptions="Center" />
+                                <Label Text="{Binding TimeRemainingText}" FontSize="14" TextColor="#8B3DFF" FontAttributes="Bold" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Grid>

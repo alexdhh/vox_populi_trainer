@@ -34,5 +34,10 @@ global using CommunityToolkit.Maui;
 global using Microsoft.Maui.Controls.Shapes;
 global using Microsoft.Maui.Controls.Xaml;
 
+global using Microsoft.ML;
+global using Microsoft.ML.Data;
+global using Microsoft.ML.Trainers;
+global using Microsoft.ML.Transforms;
+
 global using vox_populi_trainer.ViewModels;
 global using vox_populi_trainer.Views;

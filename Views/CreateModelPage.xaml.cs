@@ -20,11 +20,11 @@ public partial class CreateModelPage : ContentPage
                             {
                                 if (border.BackgroundColor != Color.FromArgb("#FBF5FF"))
                                 {
-                                    border.Stroke = Color.FromArgb("#E5E7EB"); 
+                                    border.Stroke = Color.FromArgb("#E5E7EB");
                                 }
                             }
                         }
-                }); 
+                });
             }
 
             if (e.PropertyName == nameof(viewModel.SelectedTimeOption) && TimeStack != null)
@@ -42,7 +42,7 @@ public partial class CreateModelPage : ContentPage
                     CustomTimeEntry.Focus();
                 }
             }
-        };  
+        };
     }
 
     private async void OnBackPointerEntered(object sender, PointerEventArgs e)
@@ -63,7 +63,7 @@ public partial class CreateModelPage : ContentPage
     {
         if (sender is BoxView box && box.Parent is Grid grid && grid.Parent is Border border)
         {
-            if (border.BackgroundColor == Colors.White) 
+            if (border.BackgroundColor == Colors.White)
             {
                 border.Stroke = Color.FromArgb("#A855F7");
                 border.BackgroundColor = Color.FromArgb("#FBF5FF");
@@ -113,6 +113,7 @@ public partial class CreateModelPage : ContentPage
             viewModel.SubText = "Fichier chargé avec succès !";
             viewModel.IsFileLoaded = true;
             viewModel.SelectedModel = "LbfgsRegressionOva";
+            viewModel.SelectedTimeOption = "30m";
         }
     }
 
@@ -138,17 +139,6 @@ public partial class CreateModelPage : ContentPage
             if (border.BackgroundColor != Color.FromArgb("#FBF5FF"))
             {
                 border.Stroke = Color.FromArgb("#E5E7EB");
-            }
-        }
-    }
-
-    private void OnCustomTimeEntryFocused(object sender, FocusEventArgs e)
-    {
-        if (BindingContext is CreateModelPageViewModel viewModel)
-        {
-            if (viewModel.SelectedTimeOption != "custom")
-            {
-                viewModel.SelectedTimeOption = "custom";
             }
         }
     }
