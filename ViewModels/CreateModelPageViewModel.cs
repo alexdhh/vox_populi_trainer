@@ -11,21 +11,31 @@
         [ObservableProperty]
         public partial bool IsFileLoaded { get; set; }
 
+        [ObservableProperty]
+        public partial string SelectedModel { get; set; }
+
+        [ObservableProperty]
+        public partial string SelectedTimeOption { get; set; }
+
+        [ObservableProperty]
+        public partial string CustomTimeInput { get; set; }
+
         public CreateModelPageViewModel()
         {
             UploadText = "Glissez votre fichier ici ou cliquez pour parcourir";
             SubText = "Formats acceptés: CSV, JSON, XLSX";
             IsFileLoaded = false;
+            SelectedModel = string.Empty;
         }
 
         [RelayCommand]
-        private async Task Return()
+        private async Task GoBackAsync()
         {
-            await Shell.Current.GoToAsync(nameof(ChoicePage));
+            await Shell.Current.GoToAsync("..");
         }
 
         [RelayCommand]
-        private async Task ImportDatasetAsync()
+        private async Task ImportDataset()
         {
             try
             {
@@ -47,6 +57,7 @@
                     UploadText = result.FileName;
                     SubText = "Fichier chargé avec succès !";
                     IsFileLoaded = true;
+                    SelectedModel = "LbfgsRegressionOva";
                 }
             }
             catch (Exception)
@@ -56,9 +67,32 @@
         }
 
         [RelayCommand]
-        private async Task StartTrainingAsync()
+        private void SelectModel(string modelName)
         {
-            System.Diagnostics.Debug.WriteLine("Début de l'entraînement avec le fichier : " + UploadText);
+            SelectedModel = modelName;
+        }
+
+        [RelayCommand]
+        private void SelectTime(string timeOption)
+        {
+            SelectedTimeOption = timeOption;
+        }
+
+        public int GetTrainingTimeInSeconds()
+        {
+            if (SelectedTimeOption == "30m") return 30 * 60;
+            if (SelectedTimeOption == "1h") return 60 * 60;
+            if (SelectedTimeOption == "2h") return 2 * 60 * 60;
+            if (SelectedTimeOption == "4h") return 4 * 60 * 60;
+            if (SelectedTimeOption == "custom" && int.TryParse(CustomTimeInput, out int customSecs)) return customSecs;
+
+            return 1800;
+        }
+
+        [RelayCommand]
+        private async Task StartTraining()
+        {
+            System.Diagnostics.Debug.WriteLine($"Début de l'entraînement avec {UploadText} sur le modèle {SelectedModel}");
         }
     }
 }

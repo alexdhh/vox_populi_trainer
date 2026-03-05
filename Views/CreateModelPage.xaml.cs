@@ -6,6 +6,38 @@ public partial class CreateModelPage : ContentPage
     {
         InitializeComponent();
         BindingContext = viewModel;
+
+        viewModel.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(viewModel.SelectedModel))
+            {
+                Dispatcher.Dispatch(() =>
+                {
+                    if (ModelsGrid != null)
+                        foreach (var child in ModelsGrid.Children)
+                        {
+                            if (child is Border border)
+                            {
+                                if (border.BackgroundColor != Color.FromArgb("#FBF5FF"))
+                                {
+                                    border.Stroke = Color.FromArgb("#E5E7EB"); 
+                                }
+                            }
+                        }
+                }); 
+            }
+
+            if (e.PropertyName == nameof(viewModel.SelectedTimeOption) && TimeStack != null)
+            {
+                foreach (var child in TimeStack.Children)
+                {
+                    if (child is Border border && border.BackgroundColor != Color.FromArgb("#FBF5FF"))
+                    {
+                        border.Stroke = Color.FromArgb("#E5E7EB");
+                    }
+                }
+            }
+        };  
     }
 
     private async void OnBackPointerEntered(object sender, PointerEventArgs e)
@@ -24,30 +56,37 @@ public partial class CreateModelPage : ContentPage
 
     private async void OnUploadPointerEntered(object sender, PointerEventArgs e)
     {
-        if (sender is Border border)
+        if (sender is BoxView box && box.Parent is Grid grid && grid.Parent is Border border)
         {
-            border.Stroke = Color.FromArgb("#A855F7");
-            border.BackgroundColor = Color.FromArgb("#FBF5FF");
+            if (border.BackgroundColor == Colors.White) 
+            {
+                border.Stroke = Color.FromArgb("#A855F7");
+                border.BackgroundColor = Color.FromArgb("#FBF5FF");
+            }
             await border.ScaleTo(1.01, 150, Easing.CubicOut);
         }
     }
 
     private async void OnUploadPointerExited(object sender, PointerEventArgs e)
     {
-        if (sender is Border border)
+        if (sender is BoxView box && box.Parent is Grid grid && grid.Parent is Border border)
         {
-            border.Stroke = Color.FromArgb("#D1D5DB");
-            border.BackgroundColor = Colors.White;
+            if (border.BackgroundColor == Colors.White || border.BackgroundColor.ToHex() == "#FBF5FF")
+            {
+                if (BindingContext is CreateModelPageViewModel vm && !vm.IsFileLoaded)
+                {
+                    border.Stroke = Color.FromArgb("#D1D5DB");
+                    border.BackgroundColor = Colors.White;
+                }
+            }
             await border.ScaleTo(1.0, 150, Easing.CubicIn);
         }
     }
 
     private async void OnDrop(object sender, DropEventArgs e)
     {
-        if (sender is Border border)
+        if (sender is BoxView box && box.Parent is Grid grid && grid.Parent is Border border)
         {
-            border.Stroke = Color.FromArgb("#D1D5DB");
-            border.BackgroundColor = Colors.White;
             await border.ScaleTo(1.0, 150, Easing.CubicIn);
         }
 
@@ -68,6 +107,33 @@ public partial class CreateModelPage : ContentPage
             viewModel.UploadText = fileName;
             viewModel.SubText = "Fichier chargé avec succès !";
             viewModel.IsFileLoaded = true;
+            viewModel.SelectedModel = "LbfgsRegressionOva";
+        }
+    }
+
+    private async void OnModelPointerEntered(object sender, PointerEventArgs e)
+    {
+        if (sender is BoxView box && box.Parent is Grid grid && grid.Parent is Border border)
+        {
+            await border.ScaleTo(1.02, 100, Easing.CubicOut);
+
+            if (border.BackgroundColor != Color.FromArgb("#FBF5FF"))
+            {
+                border.Stroke = Color.FromArgb("#A855F7");
+            }
+        }
+    }
+
+    private async void OnModelPointerExited(object sender, PointerEventArgs e)
+    {
+        if (sender is BoxView box && box.Parent is Grid grid && grid.Parent is Border border)
+        {
+            await border.ScaleTo(1.0, 100, Easing.CubicIn);
+
+            if (border.BackgroundColor != Color.FromArgb("#FBF5FF"))
+            {
+                border.Stroke = Color.FromArgb("#E5E7EB");
+            }
         }
     }
 }
