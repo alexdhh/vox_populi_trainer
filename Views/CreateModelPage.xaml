@@ -462,12 +462,6 @@
                                         </Ellipse>
                                     </Border>
                                     <Label Text="30 minutes" FontSize="15" VerticalOptions="Center">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedTimeOption}" Value="30m">
-                                                <Setter Property="TextColor" Value="#8B3DFF" />
-                                                <Setter Property="FontAttributes" Value="Bold" />
-                                            </DataTrigger>
-                                        </Label.Triggers>
                                     </Label>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -508,12 +502,6 @@
                                         </Ellipse>
                                     </Border>
                                     <Label Text="1 heure" FontSize="15" VerticalOptions="Center">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedTimeOption}" Value="1h">
-                                                <Setter Property="TextColor" Value="#8B3DFF" />
-                                                <Setter Property="FontAttributes" Value="Bold" />
-                                            </DataTrigger>
-                                        </Label.Triggers>
                                     </Label>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -554,12 +542,6 @@
                                         </Ellipse>
                                     </Border>
                                     <Label Text="2 heures" FontSize="15" VerticalOptions="Center">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedTimeOption}" Value="2h">
-                                                <Setter Property="TextColor" Value="#8B3DFF" />
-                                                <Setter Property="FontAttributes" Value="Bold" />
-                                            </DataTrigger>
-                                        </Label.Triggers>
                                     </Label>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -600,12 +582,6 @@
                                         </Ellipse>
                                     </Border>
                                     <Label Text="4 heures" FontSize="15" VerticalOptions="Center">
-                                        <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding SelectedTimeOption}" Value="4h">
-                                                <Setter Property="TextColor" Value="#8B3DFF" />
-                                                <Setter Property="FontAttributes" Value="Bold" />
-                                            </DataTrigger>
-                                        </Label.Triggers>
                                     </Label>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -654,12 +630,6 @@
                                             </Ellipse>
                                         </Border>
                                         <Label Text="Durée personnalisée" FontSize="15" VerticalOptions="Center">
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label" Binding="{Binding SelectedTimeOption}" Value="custom">
-                                                    <Setter Property="TextColor" Value="#8B3DFF" />
-                                                    <Setter Property="FontAttributes" Value="Bold" />
-                                                </DataTrigger>
-                                            </Label.Triggers>
                                         </Label>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
@@ -670,8 +640,10 @@
                                                Placeholder="Entrez le temps" 
                                                Text="{Binding CustomTimeInput}" 
                                                Keyboard="Numeric" 
+                                               MaxLength="5"
+                                               TextChanged="OnCustomTimeTextChanged"
                                                WidthRequest="200" 
-                                               BackgroundColor="White"
+                                               BackgroundColor="White" 
                                                IsEnabled="False">
                                             <Entry.Triggers>
                                                 <DataTrigger TargetType="Entry" Binding="{Binding SelectedTimeOption}" Value="custom">

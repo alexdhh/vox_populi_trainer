@@ -152,4 +152,18 @@ public partial class CreateModelPage : ContentPage
             }
         }
     }
+
+    private void OnCustomTimeTextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.NewTextValue))
+            return;
+
+        if (!e.NewTextValue.All(char.IsDigit))
+        {
+            if (sender is Entry entry)
+            {
+                entry.Text = e.OldTextValue;
+            }
+        }
+    }
 }
