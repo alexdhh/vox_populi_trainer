@@ -1,6 +1,5 @@
 ﻿namespace vox_populi_trainer.ViewModels
 {
-
     public class ModelInput
     {
         [LoadColumn(0)]
@@ -17,6 +16,7 @@
 
         public float[] Score { get; set; }
     }
+
     public partial class CreateModelPageViewModel : BaseViewModel
     {
         [ObservableProperty]
@@ -30,12 +30,6 @@
 
         [ObservableProperty]
         public partial string SelectedModel { get; set; }
-
-        [ObservableProperty]
-        public partial string SelectedTimeOption { get; set; }
-
-        [ObservableProperty]
-        public partial string CustomTimeInput { get; set; }
 
         [ObservableProperty]
         public partial bool IsTrainingStarted { get; set; }
@@ -52,9 +46,11 @@
         [ObservableProperty]
         public partial string TimeRemainingText { get; set; }
 
-        private CancellationTokenSource _cancellationTokenSource;
+        [ObservableProperty]
+        public partial bool IsTrainingCompleted { get; set; }
 
         private string _datasetFilePath;
+        private bool _isTrainingFinished = false;
 
         public CreateModelPageViewModel()
         {
@@ -62,6 +58,7 @@
             SubText = "Formats acceptés: CSV, JSON, XLSX";
             IsFileLoaded = false;
             SelectedModel = string.Empty;
+            IsTrainingCompleted = false;
         }
 
         [RelayCommand]
@@ -76,11 +73,11 @@
             try
             {
                 var customFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
-            {
-                { DevicePlatform.WinUI, new[] { ".csv", ".json", ".xlsx" } },
-                { DevicePlatform.Android, new[] { "text/csv", "application/json", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } },
-                { DevicePlatform.MacCatalyst, new[] { "public.comma-separated-values-text", "public.json", "org.openxmlformats.spreadsheetml.sheet" } }
-            });
+                {
+                    { DevicePlatform.WinUI, new[] { ".csv", ".json", ".xlsx" } },
+                    { DevicePlatform.Android, new[] { "text/csv", "application/json", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } },
+                    { DevicePlatform.MacCatalyst, new[] { "public.comma-separated-values-text", "public.json", "org.openxmlformats.spreadsheetml.sheet" } }
+                });
 
                 var result = await FilePicker.Default.PickAsync(new PickOptions
                 {
@@ -112,20 +109,8 @@
         }
 
         [RelayCommand] private void SelectModel(string modelName) => SelectedModel = modelName;
-        [RelayCommand] private void SelectTime(string timeOption) => SelectedTimeOption = timeOption;
 
-        public int GetTrainingTimeInSeconds()
-        {
-            if (SelectedTimeOption == "30m") return 30 * 60;
-            if (SelectedTimeOption == "1h") return 60 * 60;
-            if (SelectedTimeOption == "2h") return 2 * 60 * 60;
-            if (SelectedTimeOption == "4h") return 4 * 60 * 60;
-            if (SelectedTimeOption == "custom" && int.TryParse(CustomTimeInput, out int customSecs)) return customSecs;
-
-            return 1800;
-        }
-
-        private void RunActualMLTraining(string dataPath, CancellationToken token)
+        private void RunActualMLTraining(string dataPath)
         {
             try
             {
@@ -156,32 +141,30 @@
                     .Append(trainer)
                     .Append(mlContext.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
 
-                MainThread.BeginInvokeOnMainThread(() => TrainingStatusText = $"Entraînement en cours ({SelectedModel})...");
-
                 ITransformer trainedModel = trainingPipeline.Fit(dataView);
 
-                if (!token.IsCancellationRequested)
+                string modelPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VoxPopuliModel.mlnet");
+                mlContext.Model.Save(trainedModel, dataView.Schema, modelPath);
+
+                _isTrainingFinished = true;
+
+                MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    string modelPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VoxPopuliModel.zip");
-                    mlContext.Model.Save(trainedModel, dataView.Schema, modelPath);
-
-                    _cancellationTokenSource?.Cancel();
-
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        TrainingStatusText = "Entraînement terminé et sauvegardé !";
-                        TrainingProgress = 1.0;
-                        ProgressPercentage = "100%";
-                    });
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                MainThread.BeginInvokeOnMainThread(() => TrainingStatusText = "Temps limite atteint, entraînement arrêté.");
+                    TrainingStatusText = "Entraînement terminé !";
+                    TimeRemainingText = TimeRemainingText.Replace("Temps écoulé", "Temps total");
+                    TrainingProgress = 1.0;
+                    ProgressPercentage = "100%";
+                    IsTrainingCompleted = true;
+                });
             }
             catch (Exception ex)
             {
-                MainThread.BeginInvokeOnMainThread(() => TrainingStatusText = $"Erreur : {ex.Message}");
+                _isTrainingFinished = true;
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    TrainingStatusText = "Erreur d'entraînement";
+                    TimeRemainingText = ex.Message;
+                });
             }
         }
 
@@ -197,41 +180,75 @@
             }
 
             IsTrainingStarted = true;
-            int totalSeconds = GetTrainingTimeInSeconds();
+            IsTrainingCompleted = false;
+            _isTrainingFinished = false;
 
-            TrainingProgress = 0;
+            TrainingProgress = 0.01;
             ProgressPercentage = "0%";
-            TrainingStatusText = $"Préparation de {SelectedModel}...";
+            TrainingStatusText = $"Entraînement en cours...";
+            TimeRemainingText = $"{SelectedModel} - Temps écoulé : 00m 00s";
 
-            _cancellationTokenSource = new CancellationTokenSource();
-            _cancellationTokenSource.CancelAfter(TimeSpan.FromSeconds(totalSeconds));
-
-            Task.Run(() => RunActualMLTraining(_datasetFilePath, _cancellationTokenSource.Token));
-            Task.Run(() => RunProgressAnimation(totalSeconds, _cancellationTokenSource.Token));
+            Task.Run(() => RunActualMLTraining(_datasetFilePath));
+            Task.Run(() => RunProgressAnimation());
         }
 
-        private async Task RunProgressAnimation(int totalSeconds, CancellationToken token)
+        private async Task RunProgressAnimation()
         {
-            for (int i = 0; i <= totalSeconds; i++)
+            int elapsedSeconds = 0;
+
+            while (!_isTrainingFinished)
             {
-                if (token.IsCancellationRequested && i < totalSeconds) break;
-
-                int remaining = totalSeconds - i;
-
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
-                    TrainingProgress = (double)i / totalSeconds;
+                    double progress = 0.99 * (1.0 - Math.Exp(-elapsedSeconds / 120.0));
+
+                    TrainingProgress = Math.Max(0.01, progress);
                     ProgressPercentage = $"{(int)(TrainingProgress * 100)}%";
 
-                    TimeSpan time = TimeSpan.FromSeconds(remaining);
+                    if (TrainingProgress > 0.98)
+                    {
+                        TrainingStatusText = "Finalisation en cours, merci de patienter...";
+                    }
+
+                    TimeSpan time = TimeSpan.FromSeconds(elapsedSeconds);
                     string timeFormatted = time.TotalHours >= 1 ?
                         $"{(int)time.TotalHours}h {time.Minutes:D2}m {time.Seconds:D2}s" :
                         $"{time.Minutes:D2}m {time.Seconds:D2}s";
 
-                    TimeRemainingText = $"{SelectedModel} - Temps restant : {timeFormatted}";
+                    TimeRemainingText = $"{SelectedModel} - Temps écoulé : {timeFormatted}";
                 });
 
                 await Task.Delay(1000);
+                elapsedSeconds++;
+            }
+        }
+
+        [RelayCommand]
+        private async Task ExportModel()
+        {
+            try
+            {
+                string sourcePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VoxPopuliModel.mlnet");
+
+                string destFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string destPath = System.IO.Path.Combine(destFolder, $"VoxPopuli_{SelectedModel}.mlnet");
+
+                if (System.IO.File.Exists(sourcePath))
+                {
+                    System.IO.File.Copy(sourcePath, destPath, true);
+
+                    if (Application.Current?.MainPage != null)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Succès", $"Modèle exporté avec succès sur votre Bureau :\n{destPath}", "Super !");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Application.Current?.MainPage != null)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Erreur", $"Impossible d'exporter : {ex.Message}", "Fermer");
+                }
             }
         }
     }

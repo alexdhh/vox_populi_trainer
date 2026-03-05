@@ -24,5 +24,17 @@
                 await btn.ScaleTo(1.0, 150, Easing.CubicIn);
             }
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (StartButton != null)
+            {
+                VisualStateManager.GoToState(StartButton, "Normal");
+
+                StartButton.Unfocus();
+            }
+        }
     }
 }

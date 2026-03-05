@@ -46,16 +46,20 @@
                         </Border.Triggers>
                         <Grid>
                             <VerticalStackLayout InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Padding="40">
-                                <Border x:Name="IconContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#F3F4F6" HeightRequest="64" WidthRequest="64" StrokeThickness="0" HorizontalOptions="Center">
+                                <Border x:Name="IconContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#F3F4F6" HeightRequest="58" WidthRequest="58" StrokeThickness="0" HorizontalOptions="Center">
                                     <Border.Triggers>
                                         <DataTrigger TargetType="Border" Binding="{Binding IsFileLoaded}" Value="True">
                                             <Setter Property="BackgroundColor" Value="#8B3DFF" />
+                                            <Setter Property="HeightRequest" Value="48" />
+                                            <Setter Property="WidthRequest" Value="48" />
                                         </DataTrigger>
                                     </Border.Triggers>
-                                    <Image x:Name="UploadIcon" Source="icon_upload.png" HeightRequest="32" WidthRequest="32" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image x:Name="UploadIcon" Source="icon_upload.png" HeightRequest="28" WidthRequest="28" HorizontalOptions="Center" VerticalOptions="Center">
                                         <Image.Triggers>
                                             <DataTrigger TargetType="Image" Binding="{Binding IsFileLoaded}" Value="True">
                                                 <Setter Property="Source" Value="succes_icon.png" />
+                                                <Setter Property="HeightRequest" Value="24" />
+                                                <Setter Property="WidthRequest" Value="24" />
                                             </DataTrigger>
                                         </Image.Triggers>
                                     </Image>
@@ -421,255 +425,9 @@
                         </Border>
 
                     </Grid>
-                </VerticalStackLayout>
 
-                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsFileLoaded}">
-                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
-                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
-                            <Label Text="3" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                        </Border>
-                        <Label Text="Temps d'entraînement" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
-
-                    <VerticalStackLayout x:Name="TimeStack" Spacing="10" WidthRequest="600">
-
-                        <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="30m">
-                                    <Setter Property="Stroke" Value="#A855F7" />
-                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
-                                    <Setter Property="Shadow">
-                                        <Setter.Value>
-                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Grid>
-                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
-                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Center">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="30m">
-                                                <Setter Property="Stroke" Value="#8B3DFF" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
-                                            <Ellipse.Triggers>
-                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedTimeOption}" Value="30m">
-                                                    <Setter Property="IsVisible" Value="True" />
-                                                </DataTrigger>
-                                            </Ellipse.Triggers>
-                                        </Ellipse>
-                                    </Border>
-                                    <Label Text="30 minutes" FontSize="15" TextColor="#1F2937" VerticalOptions="Center">
-                                    </Label>
-                                </HorizontalStackLayout>
-                                <BoxView BackgroundColor="Transparent">
-                                    <BoxView.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectTimeCommand}" CommandParameter="30m" />
-                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
-                                    </BoxView.GestureRecognizers>
-                                </BoxView>
-                            </Grid>
-                        </Border>
-
-                        <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="1h">
-                                    <Setter Property="Stroke" Value="#A855F7" />
-                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
-                                    <Setter Property="Shadow">
-                                        <Setter.Value>
-                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Grid>
-                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
-                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Center">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="1h">
-                                                <Setter Property="Stroke" Value="#8B3DFF" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
-                                            <Ellipse.Triggers>
-                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedTimeOption}" Value="1h">
-                                                    <Setter Property="IsVisible" Value="True" />
-                                                </DataTrigger>
-                                            </Ellipse.Triggers>
-                                        </Ellipse>
-                                    </Border>
-                                    <Label Text="1 heure" FontSize="15" TextColor="#1F2937" VerticalOptions="Center">
-                                    </Label>
-                                </HorizontalStackLayout>
-                                <BoxView BackgroundColor="Transparent">
-                                    <BoxView.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectTimeCommand}" CommandParameter="1h" />
-                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
-                                    </BoxView.GestureRecognizers>
-                                </BoxView>
-                            </Grid>
-                        </Border>
-
-                        <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="2h">
-                                    <Setter Property="Stroke" Value="#A855F7" />
-                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
-                                    <Setter Property="Shadow">
-                                        <Setter.Value>
-                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Grid>
-                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
-                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Center">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="2h">
-                                                <Setter Property="Stroke" Value="#8B3DFF" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
-                                            <Ellipse.Triggers>
-                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedTimeOption}" Value="2h">
-                                                    <Setter Property="IsVisible" Value="True" />
-                                                </DataTrigger>
-                                            </Ellipse.Triggers>
-                                        </Ellipse>
-                                    </Border>
-                                    <Label Text="2 heures" FontSize="15" TextColor="#1F2937" VerticalOptions="Center">
-                                    </Label>
-                                </HorizontalStackLayout>
-                                <BoxView BackgroundColor="Transparent">
-                                    <BoxView.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectTimeCommand}" CommandParameter="2h" />
-                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
-                                    </BoxView.GestureRecognizers>
-                                </BoxView>
-                            </Grid>
-                        </Border>
-
-                        <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="4h">
-                                    <Setter Property="Stroke" Value="#A855F7" />
-                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
-                                    <Setter Property="Shadow">
-                                        <Setter.Value>
-                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Grid>
-                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
-                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Center">
-                                        <Border.Triggers>
-                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="4h">
-                                                <Setter Property="Stroke" Value="#8B3DFF" />
-                                            </DataTrigger>
-                                        </Border.Triggers>
-                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
-                                            <Ellipse.Triggers>
-                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedTimeOption}" Value="4h">
-                                                    <Setter Property="IsVisible" Value="True" />
-                                                </DataTrigger>
-                                            </Ellipse.Triggers>
-                                        </Ellipse>
-                                    </Border>
-                                    <Label Text="4 heures" FontSize="15" TextColor="#1F2937" VerticalOptions="Center">
-                                    </Label>
-                                </HorizontalStackLayout>
-                                <BoxView BackgroundColor="Transparent">
-                                    <BoxView.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectTimeCommand}" CommandParameter="4h" />
-                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
-                                    </BoxView.GestureRecognizers>
-                                </BoxView>
-                            </Grid>
-                        </Border>
-
-                        <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
-                            <Border.Triggers>
-                                <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="custom">
-                                    <Setter Property="Stroke" Value="#A855F7" />
-                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
-                                    <Setter Property="Shadow">
-                                        <Setter.Value>
-                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
-                                        </Setter.Value>
-                                    </Setter>
-                                </DataTrigger>
-                            </Border.Triggers>
-                            <Grid>
-                                <BoxView BackgroundColor="Transparent">
-                                    <BoxView.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SelectTimeCommand}" CommandParameter="custom" />
-                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
-                                    </BoxView.GestureRecognizers>
-                                </BoxView>
-
-                                <VerticalStackLayout InputTransparent="True" Padding="20" Spacing="15">
-                                    <HorizontalStackLayout Spacing="15">
-                                        <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Center">
-                                            <Border.Triggers>
-                                                <DataTrigger TargetType="Border" Binding="{Binding SelectedTimeOption}" Value="custom">
-                                                    <Setter Property="Stroke" Value="#8B3DFF" />
-                                                </DataTrigger>
-                                            </Border.Triggers>
-                                            <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
-                                                <Ellipse.Triggers>
-                                                    <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedTimeOption}" Value="custom">
-                                                        <Setter Property="IsVisible" Value="True" />
-                                                    </DataTrigger>
-                                                </Ellipse.Triggers>
-                                            </Ellipse>
-                                        </Border>
-                                        <Label Text="Durée personnalisée" FontSize="15" TextColor="#1F2937" VerticalOptions="Center" />
-                                    </HorizontalStackLayout>
-                                </VerticalStackLayout>
-
-                                <HorizontalStackLayout HorizontalOptions="Start" Margin="50,55,0,20" Spacing="10" InputTransparent="False">
-                                    <Grid>
-                                        <Entry x:Name="CustomTimeEntry" 
-                                               Placeholder="Entrez le temps" 
-                                               Text="{Binding CustomTimeInput}" 
-                                               Keyboard="Numeric" 
-                                               MaxLength="5"
-                                               TextChanged="OnCustomTimeTextChanged"
-                                               WidthRequest="200" 
-                                               BackgroundColor="White" 
-                                               IsEnabled="False">
-                                            <Entry.Triggers>
-                                                <DataTrigger TargetType="Entry" Binding="{Binding SelectedTimeOption}" Value="custom">
-                                                    <Setter Property="IsEnabled" Value="True" />
-                                                </DataTrigger>
-                                            </Entry.Triggers>
-                                        </Entry>
-
-                                        <BoxView BackgroundColor="Transparent">
-                                            <BoxView.Triggers>
-                                                <DataTrigger TargetType="BoxView" Binding="{Binding SelectedTimeOption}" Value="custom">
-                                                    <Setter Property="IsVisible" Value="False" />
-                                                </DataTrigger>
-                                            </BoxView.Triggers>
-                                            <BoxView.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding SelectTimeCommand}" CommandParameter="custom" />
-                                            </BoxView.GestureRecognizers>
-                                        </BoxView>
-                                    </Grid>
-                                    <Label Text="secondes" VerticalOptions="Center" TextColor="#6B7280" />
-                                </HorizontalStackLayout>
-                            </Grid>
-                        </Border>
-
-                    </VerticalStackLayout>
-
-                    <Button Text="Commencer l'entraînement"
+                    <Button x:Name="StartTrainingButton"
+                            Text="Commencer l'entraînement"
                             Command="{Binding StartTrainingCommand}"
                             Background="{StaticResource PrimaryGradient}"
                             TextColor="White"
@@ -679,7 +437,12 @@
                             HeightRequest="55"
                             FontSize="16"
                             Margin="0,30,0,0"
-                            HorizontalOptions="Center">
+                            HorizontalOptions="Center"
+                            Pressed="OnStartButtonPressed"
+                            Released="OnStartButtonReleased">
+                        <Button.GestureRecognizers>
+                            <PointerGestureRecognizer PointerEntered="OnStartButtonEntered" PointerExited="OnStartButtonExited" />
+                        </Button.GestureRecognizers>
                         <Button.Triggers>
                             <DataTrigger TargetType="Button" Binding="{Binding IsTrainingStarted}" Value="True">
                                 <Setter Property="IsVisible" Value="False" />
@@ -691,7 +454,7 @@
                 <VerticalStackLayout Spacing="15" IsVisible="{Binding IsTrainingStarted}">
                     <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
                         <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
-                            <Label Text="4" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="3" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
                         <Label Text="Entraîner le modèle" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
@@ -701,7 +464,57 @@
 
                             <Label Text="{Binding ProgressPercentage}" FontSize="32" TextColor="#8B3DFF" FontAttributes="Bold" HorizontalOptions="Center" />
 
-                            <ProgressBar Progress="{Binding TrainingProgress}" ProgressColor="#8B3DFF" HeightRequest="12" />
+                            <Border x:Name="ProgressBarContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#E5E7EB" HeightRequest="24" WidthRequest="450" HorizontalOptions="Center" StrokeThickness="0">
+
+                                <Border x:Name="ProgressBarFill" StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="1" HorizontalOptions="Start" VerticalOptions="Center" StrokeThickness="0">
+
+                                    <Grid WidthRequest="450" HeightRequest="24" HorizontalOptions="Start" VerticalOptions="Center" IsClippedToBounds="True">
+
+                                        <HorizontalStackLayout x:Name="StripesGrid" Spacing="15" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="1500" InputTransparent="True">
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </Border>
 
                             <VerticalStackLayout Spacing="8" HorizontalOptions="Center" Margin="0,15,0,0">
                                 <Label Text="{Binding TrainingStatusText}" FontSize="16" TextColor="#1F2937" HorizontalOptions="Center" />
@@ -711,6 +524,55 @@
                         </VerticalStackLayout>
                     </Border>
                 </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsTrainingCompleted}">
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="4" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Exporter le modèle" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#A7F3D0" StrokeThickness="1.5" BackgroundColor="#F0FDF4" WidthRequest="600" Padding="25">
+                        <VerticalStackLayout Spacing="20">
+
+                            <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                                <Border StrokeShape="RoundRectangle 12" BackgroundColor="#10B981" HeightRequest="30" WidthRequest="30" StrokeThickness="0">
+                                    <Image Source="succes_icon.png" HeightRequest="18" WidthRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="Entraînement terminé!" FontSize="16" TextColor="#065F46" FontAttributes="Bold" />
+                                    <Label Text="Votre modèle est prêt à être exporté" FontSize="14" TextColor="#047857" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <Button x:Name="ExportButton"
+                                    Text="Exporter le modèle"
+                                    Command="{Binding ExportModelCommand}"
+                                    Background="{StaticResource PrimaryGradient}"
+                                    TextColor="White"
+                                    CornerRadius="12"
+                                    FontAttributes="Bold"
+                                    WidthRequest="300"
+                                    HeightRequest="55"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    Pressed="OnExportButtonPressed"
+                                    Released="OnExportButtonReleased">
+                                <Button.GestureRecognizers>
+                                    <PointerGestureRecognizer PointerEntered="OnExportButtonEntered" PointerExited="OnExportButtonExited" />
+                                </Button.GestureRecognizers>
+                                <Button.Shadow>
+                                    <Shadow Brush="#A855F7" Opacity="0.3" Radius="15" Offset="0,6" />
+                                </Button.Shadow>
+                            </Button>
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

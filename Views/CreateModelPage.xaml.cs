@@ -27,20 +27,44 @@ public partial class CreateModelPage : ContentPage
                 });
             }
 
-            if (e.PropertyName == nameof(viewModel.SelectedTimeOption) && TimeStack != null)
+            if (e.PropertyName == nameof(viewModel.IsTrainingStarted))
             {
-                foreach (var child in TimeStack.Children)
+                Dispatcher.Dispatch(() =>
                 {
-                    if (child is Border border && border.BackgroundColor != Color.FromArgb("#FBF5FF"))
+                    if (StripesGrid != null)
                     {
-                        border.Stroke = Color.FromArgb("#E5E7EB");
+                        StripesGrid.AbortAnimation("StripeAnim"); 
+                        if (viewModel.IsTrainingStarted)
+                        {
+                            var stripeAnimation = new Animation(v => StripesGrid.TranslationX = v, 0, -30);
+                            stripeAnimation.Commit(this, "StripeAnim", length: 600, repeat: () => true);
+                        }
                     }
-                }
+                });
+            }
 
-                if (viewModel.SelectedTimeOption == "custom" && CustomTimeEntry != null)
+            if (e.PropertyName == nameof(viewModel.TrainingProgress))
+            {
+                Dispatcher.Dispatch(() =>
                 {
-                    CustomTimeEntry.Focus();
-                }
+                    if (ProgressBarFill != null && ProgressBarContainer != null)
+                    {
+                        double targetWidth = Math.Max(1, ProgressBarContainer.WidthRequest * viewModel.TrainingProgress);
+
+                        ProgressBarFill.AbortAnimation("ProgressAnim");
+
+                        if (viewModel.TrainingProgress == 0)
+                        {
+                            ProgressBarFill.WidthRequest = 1;
+                            return;
+                        }
+
+                        ProgressBarFill.Animate("ProgressAnim",
+                            new Animation(v => ProgressBarFill.WidthRequest = v, ProgressBarFill.WidthRequest, targetWidth),
+                            length: 1000,
+                            easing: Easing.Linear);
+                    }
+                });
             }
         };
     }
@@ -113,7 +137,6 @@ public partial class CreateModelPage : ContentPage
             viewModel.SubText = "Fichier chargé avec succès !";
             viewModel.IsFileLoaded = true;
             viewModel.SelectedModel = "LbfgsRegressionOva";
-            viewModel.SelectedTimeOption = "30m";
         }
     }
 
@@ -155,5 +178,45 @@ public partial class CreateModelPage : ContentPage
                 entry.Text = e.OldTextValue;
             }
         }
+    }
+
+    private async void OnStartButtonEntered(object sender, PointerEventArgs e)
+    {
+        if (sender is View view) await view.ScaleTo(1.05, 150, Easing.CubicOut);
+    }
+
+    private async void OnStartButtonExited(object sender, PointerEventArgs e)
+    {
+        if (sender is View view) await view.ScaleTo(1.0, 150, Easing.CubicIn);
+    }
+
+    private async void OnStartButtonPressed(object sender, EventArgs e)
+    {
+        if (sender is View view) await view.ScaleTo(0.95, 100, Easing.CubicOut);
+    }
+
+    private async void OnStartButtonReleased(object sender, EventArgs e)
+    {
+        if (sender is View view) await view.ScaleTo(1.05, 100, Easing.CubicIn);
+    }
+
+    private async void OnExportButtonEntered(object sender, PointerEventArgs e)
+    {
+        if (sender is View view) await view.ScaleTo(1.05, 150, Easing.CubicOut);
+    }
+
+    private async void OnExportButtonExited(object sender, PointerEventArgs e)
+    {
+        if (sender is View view) await view.ScaleTo(1.0, 150, Easing.CubicIn);
+    }
+
+    private async void OnExportButtonPressed(object sender, EventArgs e)
+    {
+        if (sender is View view) await view.ScaleTo(0.95, 100, Easing.CubicOut);
+    }
+
+    private async void OnExportButtonReleased(object sender, EventArgs e)
+    {
+        if (sender is View view) await view.ScaleTo(1.05, 100, Easing.CubicIn);
     }
 }

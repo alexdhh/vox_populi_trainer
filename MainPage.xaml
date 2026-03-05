@@ -70,7 +70,8 @@
                TextColor="#8B3DFF"
                HorizontalOptions="Center" />
 
-        <Button Text="Commencer"
+        <Button x:Name="StartButton"
+                Text="Commencer"
                 Command="{Binding StartCommand}"
                 Style="{StaticResource AnimatedButtonStyle}"
                 WidthRequest="220"
