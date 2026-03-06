@@ -20,6 +20,8 @@
             builder.Services.AddTransient<ChoicePage>();
             builder.Services.AddTransient<CreateModelPageViewModel>();
             builder.Services.AddTransient<CreateModelPage>();
+            builder.Services.AddTransient<GenerateDataPageViewModel>();
+            builder.Services.AddTransient<GenerateDataPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

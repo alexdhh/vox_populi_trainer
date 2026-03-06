@@ -33,6 +33,7 @@ global using CommunityToolkit.Mvvm.Messaging.Messages;
 global using CommunityToolkit.Maui;
 global using Microsoft.Maui.Controls.Shapes;
 global using Microsoft.Maui.Controls.Xaml;
+global using CommunityToolkit.Maui.Storage;
 
 global using Microsoft.ML;
 global using Microsoft.ML.Data;

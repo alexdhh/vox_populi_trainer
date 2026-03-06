@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="vox_populi_trainer.Views.GenerateDataPage"
+             Shell.NavBarIsVisible="False"
+             Title="GenerateDataPage">
+
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#A855F7" Offset="0.0" />
+            <GradientStop Color="#7E22CE" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <Style x:Key="AnimatedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryGradient}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#A855F7" Opacity="0.3" Radius="15" Offset="0,6" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto, *">
+
+            <VerticalStackLayout Grid.Row="0" Padding="30" Spacing="5" HorizontalOptions="Start">
+                <HorizontalStackLayout Spacing="8" HorizontalOptions="Start" AnchorX="0" Margin="10,0,0,20">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ReturnCommand}" />
+                        <PointerGestureRecognizer PointerEntered="OnBackPointerEntered" PointerExited="OnBackPointerExited" />
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <Label x:Name="BackIcon" Text="←" FontSize="18" TextColor="#4B5563" VerticalOptions="Center"/>
+                    <Label x:Name="BackText" Text="Retour" FontSize="16" TextColor="#4B5563" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <Label Text="Générer des données" FontSize="28" TextColor="#8B3DFF" Margin="10,0,0,0" FontAttributes="Bold" />
+                <Label Text="Générez un dataset synthétique" FontSize="14" Margin="10,0,0,0" TextColor="#6B7280" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" Spacing="35" VerticalOptions="Start" HorizontalOptions="Center" Margin="0,40,0,50">
+
+                <VerticalStackLayout Spacing="25">
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White" WidthRequest="600" Padding="30">
+                        <VerticalStackLayout Spacing="20">
+
+                            <HorizontalStackLayout Spacing="15" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="Nombre d'échantillons par bord politique :" FontSize="16" TextColor="#1F2937" VerticalOptions="Center" FontAttributes="Bold" />
+                                <Border StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="1" BackgroundColor="#F9FAFB">
+                                    <Entry Text="{Binding SampleCountInput}" 
+                                           Keyboard="Numeric" 
+                                           WidthRequest="120" 
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="#8B3DFF"
+                                           FontSize="18"
+                                           FontFamily="OpenSansSemibold"
+                                           FontAttributes="Bold"/>
+                                </Border>
+                            </HorizontalStackLayout>
+
+                            <Button x:Name="StartButton"
+                                    Text="Générer le dataset"
+                                    Command="{Binding StartGenerationCommand}"
+                                    Style="{StaticResource AnimatedButtonStyle}"
+                                    WidthRequest="300"
+                                    HeightRequest="55"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    Pressed="OnStartButtonPressed"
+                                    Released="OnStartButtonReleased"
+                                    Margin="0,15,0,0">
+                                <Button.GestureRecognizers>
+                                    <PointerGestureRecognizer PointerEntered="OnPointerEntered" PointerExited="OnPointerExited" />
+                                </Button.GestureRecognizers>
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsGenerating}" Value="True">
+                                        <Setter Property="IsVisible" Value="False" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsGenerating}">
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White" WidthRequest="600" Padding="50">
+                        <VerticalStackLayout Spacing="25" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="450">
+
+                            <Label Text="{Binding ProgressPercentage}" FontSize="32" TextColor="#8B3DFF" FontAttributes="Bold" HorizontalOptions="Center" />
+
+                            <Border x:Name="ProgressBarContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#E5E7EB" HeightRequest="24" WidthRequest="450" HorizontalOptions="Center" StrokeThickness="0">
+                                <Border x:Name="ProgressBarFill" StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="1" HorizontalOptions="Start" VerticalOptions="Center" StrokeThickness="0">
+                                    <Grid WidthRequest="450" HeightRequest="24" HorizontalOptions="Start" VerticalOptions="Center" IsClippedToBounds="True">
+                                        <HorizontalStackLayout x:Name="StripesGrid" Spacing="15" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="1500" InputTransparent="True">
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </Border>
+
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center" Margin="0,15,0,0">
+                                <Label Text="{Binding StatusText}" FontSize="16" TextColor="#1F2937" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsGenerationCompleted}">
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#A7F3D0" StrokeThickness="1.5" BackgroundColor="#F0FDF4" WidthRequest="600" Padding="25">
+                        <VerticalStackLayout Spacing="20">
+                            <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                                <Border StrokeShape="RoundRectangle 12" BackgroundColor="#10B981" HeightRequest="30" WidthRequest="30" StrokeThickness="0">
+                                    <Image Source="succes_icon.png" HeightRequest="18" WidthRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="Génération terminée !" FontSize="16" TextColor="#065F46" FontAttributes="Bold" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <Button x:Name="ExportButton"
+                                    Text="Exporter le dataset (.csv)"
+                                    Command="{Binding ExportDatasetCommand}"
+                                    Style="{StaticResource AnimatedButtonStyle}"
+                                    WidthRequest="300"
+                                    HeightRequest="55"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    Pressed="OnExportButtonPressed"
+                                    Released="OnExportButtonReleased">
+                                <Button.GestureRecognizers>
+                                    <PointerGestureRecognizer PointerEntered="OnPointerEntered" PointerExited="OnPointerExited" />
+                                </Button.GestureRecognizers>
+                            </Button>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

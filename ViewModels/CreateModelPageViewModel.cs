@@ -1,4 +1,6 @@
-﻿namespace vox_populi_trainer.ViewModels
+﻿using CommunityToolkit.Maui.Storage;
+
+namespace vox_populi_trainer.ViewModels
 {
     public class ModelInput
     {
@@ -224,23 +226,17 @@
         }
 
         [RelayCommand]
-        private async Task ExportModel()
+        private async Task ExportModel(CancellationToken cancellationToken)
         {
             try
             {
                 string sourcePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VoxPopuliModel.mlnet");
 
-                string destFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                string destPath = System.IO.Path.Combine(destFolder, $"VoxPopuli_{SelectedModel}.mlnet");
-
                 if (System.IO.File.Exists(sourcePath))
                 {
-                    System.IO.File.Copy(sourcePath, destPath, true);
+                    using var stream = new FileStream(sourcePath, FileMode.Open, FileAccess.Read);
 
-                    if (Application.Current?.MainPage != null)
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Succès", $"Modèle exporté avec succès sur votre Bureau :\n{destPath}", "Super !");
-                    }
+                    var fileSaverResult = await FileSaver.Default.SaveAsync($"VoxPopuli_{SelectedModel}.mlnet", stream, cancellationToken);
                 }
             }
             catch (Exception ex)

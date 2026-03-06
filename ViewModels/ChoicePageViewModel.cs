@@ -17,6 +17,6 @@ public partial class ChoicePageViewModel : BaseViewModel
     [RelayCommand]
     private async Task NavigateToCustomizeModel()
     {
-        // à faire
+        await Shell.Current.GoToAsync(nameof(GenerateDataPage));
     }
 }

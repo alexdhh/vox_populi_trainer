@@ -118,7 +118,7 @@
                                     </Border>
                                     <VerticalStackLayout>
                                         <Label Text="LbfgsRegressionOva" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Algorithme de classification" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="Linéaire One-vs-All, bon équilibre" FontSize="12" TextColor="#6B7280" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -160,7 +160,7 @@
                                     </Border>
                                     <VerticalStackLayout>
                                         <Label Text="LbfgsMaximumEntropy" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Algorithme de classification" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="Entropie max, excellent pour le texte" FontSize="12" TextColor="#6B7280" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -202,7 +202,7 @@
                                     </Border>
                                     <VerticalStackLayout>
                                         <Label Text="LightGbm" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Algorithme de classification" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="Arbres boostés, très rapide et précis" FontSize="12" TextColor="#6B7280" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -244,7 +244,7 @@
                                     </Border>
                                     <VerticalStackLayout>
                                         <Label Text="SdcaMaximumEntropy" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Algorithme de classification" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="Entropie max optimisée (grands datasets)" FontSize="12" TextColor="#6B7280" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -286,7 +286,7 @@
                                     </Border>
                                     <VerticalStackLayout>
                                         <Label Text="LbfgsLogisticRegression" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Algorithme de classification" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="Régression logistique classique et robuste" FontSize="12" TextColor="#6B7280" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -328,7 +328,7 @@
                                     </Border>
                                     <VerticalStackLayout>
                                         <Label Text="FastTree" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Algorithme de classification" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="Arbres de décision (Gradient boosting)" FontSize="12" TextColor="#6B7280" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -370,7 +370,7 @@
                                     </Border>
                                     <VerticalStackLayout>
                                         <Label Text="SdcaLogisticRegression" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Algorithme de classification" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="Descente de gradient stochastique" FontSize="12" TextColor="#6B7280" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -412,7 +412,7 @@
                                     </Border>
                                     <VerticalStackLayout>
                                         <Label Text="FastForest" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Algorithme de classification" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="Forêt aléatoire, anti-surapprentissage" FontSize="12" TextColor="#6B7280" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
