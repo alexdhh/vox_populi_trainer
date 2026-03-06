@@ -66,13 +66,13 @@
 
                 <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
                     <Border StrokeShape="RoundRectangle 14" HeightRequest="64" WidthRequest="64" Background="{StaticResource PrimaryGradient}" StrokeThickness="0" HorizontalOptions="Center">
-                        <Image Source="star_icon.png" 
+                        <Image Source="cog_icon.png" 
                                HeightRequest="32" 
                                WidthRequest="32" 
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" />
                     </Border>
-                    <Label Text="Générer des données" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                    <Label Text="Créer un modèle" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
                     <Label Text="Importez un dataset et entraînez un nouveau modèle d'IA personnalisé" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" />
 
                     <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
@@ -90,14 +90,14 @@
 
                 <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
                     <Border StrokeShape="RoundRectangle 14" HeightRequest="64" WidthRequest="64" Background="{StaticResource PrimaryGradient}" StrokeThickness="0" HorizontalOptions="Center">
-                        <Image Source="cog_icon.png" 
+                        <Image Source="star_icon.png" 
                                HeightRequest="32" 
                                WidthRequest="32" 
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" />
                     </Border>
-                    <Label Text="Customiser mon modèle" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
-                    <Label Text="Importez un modèle existant et affinez-le selon vos besoins" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" />
+                    <Label Text="Générer des données" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                    <Label Text="Générer un dataset synthétique avec le nombre d'échantillons de votre choix" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" />
 
                     <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
                 </VerticalStackLayout>
