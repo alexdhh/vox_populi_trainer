@@ -72,7 +72,7 @@
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" />
                     </Border>
-                    <Label Text="Créer mon modèle" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
+                    <Label Text="Générer des données" FontSize="20" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" />
                     <Label Text="Importez un dataset et entraînez un nouveau modèle d'IA personnalisé" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" />
 
                     <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
