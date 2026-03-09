@@ -19,4 +19,10 @@ public partial class ChoicePageViewModel : BaseViewModel
     {
         await Shell.Current.GoToAsync(nameof(GenerateDataPage));
     }
+
+    [RelayCommand]
+    private async Task NavigateToTestModel()
+    {
+        await Shell.Current.GoToAsync(nameof(TestModelPage));
+    }
 }

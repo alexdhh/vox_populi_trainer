@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="vox_populi_trainer.Views.TestModelPage"
+             Shell.NavBarIsVisible="False"
+             Title="TestModelPage">
+
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#A855F7" Offset="0.0" />
+            <GradientStop Color="#7E22CE" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <Style x:Key="AnimatedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryGradient}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#A855F7" Opacity="0.3" Radius="15" Offset="0,6" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto, *">
+
+            <VerticalStackLayout Grid.Row="0" Padding="30" Spacing="5" HorizontalOptions="Start">
+                <HorizontalStackLayout Spacing="8" HorizontalOptions="Start" AnchorX="0" Margin="10,0,0,20">
+                    <HorizontalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ReturnCommand}" />
+                        <PointerGestureRecognizer PointerEntered="OnBackPointerEntered" PointerExited="OnBackPointerExited" />
+                    </HorizontalStackLayout.GestureRecognizers>
+                    <Label x:Name="BackIcon" Text="←" FontSize="18" TextColor="#4B5563" VerticalOptions="Center"/>
+                    <Label x:Name="BackText" Text="Retour" FontSize="16" TextColor="#4B5563" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+                <Label Text="Tester mon modèle" FontSize="28" TextColor="#8B3DFF" Margin="10,0,0,0" FontAttributes="Bold" />
+                <Label Text="Importez votre modèle et testez ses prédictions" FontSize="14" Margin="10,0,0,0" TextColor="#6B7280" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" Spacing="40" HorizontalOptions="Center" Margin="0,20,0,50">
+
+                <VerticalStackLayout Spacing="15">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="1" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Importer un modèle" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Border x:Name="UploadBorder" StrokeShape="RoundRectangle 12" Stroke="#D1D5DB" StrokeThickness="1" StrokeDashArray="4,4" BackgroundColor="White" WidthRequest="600" HeightRequest="180">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsModelLoaded}" Value="True">
+                                <Setter Property="Stroke" Value="#A855F7" />
+                                <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                            </DataTrigger>
+                        </Border.Triggers>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ImportModelCommand}" />
+                            <PointerGestureRecognizer PointerEntered="OnUploadPointerEntered" PointerExited="OnUploadPointerExited" />
+                        </Border.GestureRecognizers>
+
+                        <Grid>
+                            <VerticalStackLayout InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Padding="40">
+
+                                <Border x:Name="IconContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#F3F4F6" HeightRequest="58" WidthRequest="58" StrokeThickness="0" HorizontalOptions="Center">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsModelLoaded}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#8B3DFF" />
+                                            <Setter Property="HeightRequest" Value="48" />
+                                            <Setter Property="WidthRequest" Value="48" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+
+                                    <Image x:Name="UploadIcon" Source="upload_icon.png" HeightRequest="28" WidthRequest="28" HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" Binding="{Binding IsModelLoaded}" Value="True">
+                                                <Setter Property="Source" Value="succes_icon.png" />
+                                                <Setter Property="HeightRequest" Value="24" />
+                                                <Setter Property="WidthRequest" Value="24" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </Border>
+                                <Label Text="{Binding UploadText}" FontSize="16" TextColor="#4B5563" FontAttributes="Bold" HorizontalOptions="Center" />
+                                <Label Text="{Binding SubText}" FontSize="12" TextColor="#9CA3AF" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsModelLoaded}" WidthRequest="600">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="2" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Entrer du texte" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Border StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="1" BackgroundColor="White" HeightRequest="120">
+                        <Editor Text="{Binding InputText}" 
+                                Placeholder="Saisissez la phrase à analyser ici..."
+                                PlaceholderColor="#9CA3AF"
+                                TextColor="#1F2937"
+                                FontSize="16"
+                                Margin="10"
+                                BackgroundColor="Transparent" />
+                    </Border>
+
+                    <Button x:Name="PredictButton"
+                            Text=" Obtenir la prédiction"
+                            Command="{Binding GetPredictionCommand}"
+                            Style="{StaticResource AnimatedButtonStyle}"
+                            HeightRequest="55"
+                            FontSize="16"
+                            Pressed="OnPredictButtonPressed"
+                            Released="OnPredictButtonReleased">
+                        <Button.GestureRecognizers>
+                            <PointerGestureRecognizer PointerEntered="OnPointerEntered" PointerExited="OnPointerExited" />
+                        </Button.GestureRecognizers>
+                    </Button>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsPredictionVisible}" WidthRequest="600">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="3" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Résultat de la prédiction" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Border StrokeShape="RoundRectangle 12" BackgroundColor="#F5F3FF" StrokeThickness="0" Padding="20">
+                        <VerticalStackLayout Spacing="15">
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Label Text="✨" FontSize="18" TextColor="#7E22CE" VerticalOptions="Center"/>
+                                <Label Text="Prédiction du modèle" FontSize="14" TextColor="#7E22CE" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="White" StrokeThickness="0" Padding="15">
+                                <Label Text="{Binding PredictionResultText}" FontSize="16" TextColor="#1F2937" />
+                            </Border>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

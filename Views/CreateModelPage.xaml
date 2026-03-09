@@ -54,7 +54,7 @@
                                             <Setter Property="WidthRequest" Value="48" />
                                         </DataTrigger>
                                     </Border.Triggers>
-                                    <Image x:Name="UploadIcon" Source="icon_upload.png" HeightRequest="28" WidthRequest="28" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image x:Name="UploadIcon" Source="upload_icon.png" HeightRequest="28" WidthRequest="28" HorizontalOptions="Center" VerticalOptions="Center">
                                         <Image.Triggers>
                                             <DataTrigger TargetType="Image" Binding="{Binding IsFileLoaded}" Value="True">
                                                 <Setter Property="Source" Value="succes_icon.png" />

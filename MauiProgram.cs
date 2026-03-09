@@ -22,6 +22,8 @@
             builder.Services.AddTransient<CreateModelPage>();
             builder.Services.AddTransient<GenerateDataPageViewModel>();
             builder.Services.AddTransient<GenerateDataPage>();
+            builder.Services.AddTransient<TestModelPageViewModel>();
+            builder.Services.AddTransient<TestModelPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
