@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="vox_populi_trainer.Views.CreateModelPage"
+             Shell.NavBarIsVisible="False"
+             Title="CreateModelPage">
+
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#A855F7" Offset="0.0" />
+            <GradientStop Color="#7E22CE" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <Style x:Key="AnimatedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryGradient}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="FontFamily" Value="TTNormsBold" />
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#A855F7" Opacity="0.3" Radius="15" Offset="0,6" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto, *">
+
+            <VerticalStackLayout Grid.Row="0" Padding="30" Spacing="5" HorizontalOptions="Start">
+
+                <Grid HorizontalOptions="Start" Margin="10,0,0,20">
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ReturnCommand}" />
+                        <PointerGestureRecognizer PointerEntered="OnBackPointerEntered" PointerExited="OnBackPointerExited" />
+                    </Grid.GestureRecognizers>
+
+                    <Border x:Name="BackButtonBorder"
+                        StrokeShape="RoundRectangle 22"
+                        HeightRequest="32"
+                        WidthRequest="32"
+                        BackgroundColor="#F3F4F6"
+                        StrokeThickness="0"
+                        InputTransparent="True">
+
+                        <Image Source="return_icon.png" 
+                           HeightRequest="17" 
+                           WidthRequest="17" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"
+                           InputTransparent="True" />
+                    </Border>
+                </Grid>
+
+                <Label Text="Créer mon modèle" 
+                       FontSize="28" 
+                       TextColor="#8B3DFF" 
+                       Margin="10,0,0,0"
+                       FontAttributes="Bold"
+                       FontFamily="TTNormsNormal"/>
+
+                <Label Text="Suivez les étapes pour créer votre modèle d'IA personnalisé" 
+                       FontSize="14" 
+                       Margin="10,0,0,0" 
+                       TextColor="#6B7280" 
+                       FontFamily="TTNormsRegular" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" Spacing="40" HorizontalOptions="Center" Margin="0,20,0,50">
+
+                <VerticalStackLayout Spacing="15">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="1" TextColor="White" FontSize="12" FontFamily="TTNormsBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Importer un dataset" FontSize="18" TextColor="#1F2937" FontFamily="TTNormsBold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Border x:Name="UploadBorder" StrokeShape="RoundRectangle 12" Stroke="#D1D5DB" StrokeThickness="1" StrokeDashArray="4,4" BackgroundColor="White" WidthRequest="600" HeightRequest="180">
+                        <Border.Triggers>
+                            <DataTrigger TargetType="Border" Binding="{Binding IsFileLoaded}" Value="True">
+                                <Setter Property="Stroke" Value="#A855F7" />
+                                <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                            </DataTrigger>
+                        </Border.Triggers>
+                        <Grid>
+                            <VerticalStackLayout InputTransparent="True" HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Padding="40">
+                                <Border x:Name="IconContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#F3F4F6" HeightRequest="58" WidthRequest="58" StrokeThickness="0" HorizontalOptions="Center">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding IsFileLoaded}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#8B3DFF" />
+                                            <Setter Property="HeightRequest" Value="48" />
+                                            <Setter Property="WidthRequest" Value="48" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+                                    <Image x:Name="UploadIcon" Source="upload_icon.png" HeightRequest="28" WidthRequest="28" HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" Binding="{Binding IsFileLoaded}" Value="True">
+                                                <Setter Property="Source" Value="succes_icon.png" />
+                                                <Setter Property="HeightRequest" Value="24" />
+                                                <Setter Property="WidthRequest" Value="24" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </Border>
+                                <Label Text="{Binding UploadText}" FontSize="16" TextColor="#1F2937" FontFamily="TTNormsBold" HorizontalOptions="Center" />
+                                <Label Text="{Binding SubText}" FontSize="12" TextColor="#9CA3AF" FontFamily="TTNormsRegular" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <BoxView BackgroundColor="Transparent">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ImportDatasetCommand}" />
+                                    <PointerGestureRecognizer PointerEntered="OnUploadPointerEntered" PointerExited="OnUploadPointerExited" />
+                                    <DropGestureRecognizer AllowDrop="True" Drop="OnDrop" />
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsFileLoaded}">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="2" TextColor="White" FontSize="12" FontFamily="TTNormsBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Choisir un modèle" FontSize="18" TextColor="#1F2937" FontFamily="TTNormsBold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Grid x:Name="ModelsGrid" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*, *" ColumnSpacing="15" RowSpacing="15" WidthRequest="600">
+
+                        <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="LbfgsRegressionOva">
+                                    <Setter Property="Stroke" Value="#A855F7" />
+                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
+                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Start" Margin="0,3,0,0">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="LbfgsRegressionOva">
+                                                <Setter Property="Stroke" Value="#8B3DFF" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedModel}" Value="LbfgsRegressionOva">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Border>
+                                    <VerticalStackLayout>
+                                        <Label Text="LbfgsRegressionOva" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Linéaire One-vs-All, bon équilibre" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <BoxView BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectModelCommand}" CommandParameter="LbfgsRegressionOva" />
+                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="LbfgsMaximumEntropy">
+                                    <Setter Property="Stroke" Value="#A855F7" />
+                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
+                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Start" Margin="0,3,0,0">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="LbfgsMaximumEntropy">
+                                                <Setter Property="Stroke" Value="#8B3DFF" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedModel}" Value="LbfgsMaximumEntropy">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Border>
+                                    <VerticalStackLayout>
+                                        <Label Text="LbfgsMaximumEntropy" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Entropie max, excellent pour le texte" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <BoxView BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectModelCommand}" CommandParameter="LbfgsMaximumEntropy" />
+                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="0" StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="LightGbm">
+                                    <Setter Property="Stroke" Value="#A855F7" />
+                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
+                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Start" Margin="0,3,0,0">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="LightGbm">
+                                                <Setter Property="Stroke" Value="#8B3DFF" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedModel}" Value="LightGbm">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Border>
+                                    <VerticalStackLayout>
+                                        <Label Text="LightGbm" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Arbres boostés, très rapide et précis" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <BoxView BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectModelCommand}" CommandParameter="LightGbm" />
+                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="1" StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="SdcaMaximumEntropy">
+                                    <Setter Property="Stroke" Value="#A855F7" />
+                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
+                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Start" Margin="0,3,0,0">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="SdcaMaximumEntropy">
+                                                <Setter Property="Stroke" Value="#8B3DFF" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedModel}" Value="SdcaMaximumEntropy">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Border>
+                                    <VerticalStackLayout>
+                                        <Label Text="SdcaMaximumEntropy" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Entropie max optimisée (grands datasets)" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <BoxView BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectModelCommand}" CommandParameter="SdcaMaximumEntropy" />
+                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="0" StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="LbfgsLogisticRegression">
+                                    <Setter Property="Stroke" Value="#A855F7" />
+                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
+                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Start" Margin="0,3,0,0">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="LbfgsLogisticRegression">
+                                                <Setter Property="Stroke" Value="#8B3DFF" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedModel}" Value="LbfgsLogisticRegression">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Border>
+                                    <VerticalStackLayout>
+                                        <Label Text="LbfgsLogisticRegression" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Régression logistique classique et robuste" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <BoxView BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectModelCommand}" CommandParameter="LbfgsLogisticRegression" />
+                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="1" StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="FastTree">
+                                    <Setter Property="Stroke" Value="#A855F7" />
+                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
+                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Start" Margin="0,3,0,0">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="FastTree">
+                                                <Setter Property="Stroke" Value="#8B3DFF" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedModel}" Value="FastTree">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Border>
+                                    <VerticalStackLayout>
+                                        <Label Text="FastTree" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Arbres de décision (Gradient boosting)" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <BoxView BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectModelCommand}" CommandParameter="FastTree" />
+                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="3" Grid.Column="0" StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="SdcaLogisticRegression">
+                                    <Setter Property="Stroke" Value="#A855F7" />
+                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
+                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Start" Margin="0,3,0,0">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="SdcaLogisticRegression">
+                                                <Setter Property="Stroke" Value="#8B3DFF" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedModel}" Value="SdcaLogisticRegression">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Border>
+                                    <VerticalStackLayout>
+                                        <Label Text="SdcaLogisticRegression" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Descente de gradient stochastique" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <BoxView BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectModelCommand}" CommandParameter="SdcaLogisticRegression" />
+                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="3" Grid.Column="1" StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="FastForest">
+                                    <Setter Property="Stroke" Value="#A855F7" />
+                                    <Setter Property="BackgroundColor" Value="#FBF5FF" />
+                                    <Setter Property="Shadow">
+                                        <Setter.Value>
+                                            <Shadow Brush="#A855F7" Opacity="0.25" Radius="15" Offset="0,4" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid>
+                                <HorizontalStackLayout Spacing="15" InputTransparent="True" Padding="20">
+                                    <Border HeightRequest="16" WidthRequest="16" StrokeShape="RoundRectangle 8" Stroke="#D1D5DB" StrokeThickness="2" BackgroundColor="White" VerticalOptions="Start" Margin="0,3,0,0">
+                                        <Border.Triggers>
+                                            <DataTrigger TargetType="Border" Binding="{Binding SelectedModel}" Value="FastForest">
+                                                <Setter Property="Stroke" Value="#8B3DFF" />
+                                            </DataTrigger>
+                                        </Border.Triggers>
+                                        <Ellipse Fill="#8B3DFF" WidthRequest="8" HeightRequest="8" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="False">
+                                            <Ellipse.Triggers>
+                                                <DataTrigger TargetType="Ellipse" Binding="{Binding SelectedModel}" Value="FastForest">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Ellipse.Triggers>
+                                        </Ellipse>
+                                    </Border>
+                                    <VerticalStackLayout>
+                                        <Label Text="FastForest" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Forêt aléatoire, anti-surapprentissage" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                                <BoxView BackgroundColor="Transparent">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding SelectModelCommand}" CommandParameter="FastForest" />
+                                        <PointerGestureRecognizer PointerEntered="OnModelPointerEntered" PointerExited="OnModelPointerExited" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+                            </Grid>
+                        </Border>
+
+                    </Grid>
+
+                    <Button x:Name="StartTrainingButton"
+                            Text="Commencer l'entraînement"
+                            Command="{Binding StartTrainingCommand}"
+                            Style="{StaticResource AnimatedButtonStyle}"
+                            WidthRequest="300"
+                            HeightRequest="55"
+                            FontSize="16"
+                            Margin="0,30,0,0"
+                            HorizontalOptions="Center"
+                            Pressed="OnStartButtonPressed"
+                            Released="OnStartButtonReleased">
+                        <Button.GestureRecognizers>
+                            <PointerGestureRecognizer PointerEntered="OnStartButtonEntered" PointerExited="OnStartButtonExited" />
+                        </Button.GestureRecognizers>
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding IsTrainingStarted}" Value="True">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsTrainingStarted}">
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="3" TextColor="White" FontSize="12" FontFamily="TTNormsBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Entraîner le modèle" FontSize="18" TextColor="#1F2937" FontFamily="TTNormsBold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White" WidthRequest="600" Padding="50">
+                        <VerticalStackLayout Spacing="25" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="450">
+
+                            <Label Text="{Binding ProgressPercentage}" FontSize="32" TextColor="#8B3DFF" FontFamily="TTNormsBold" HorizontalOptions="Center" />
+
+                            <Border x:Name="ProgressBarContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#E5E7EB" HeightRequest="24" WidthRequest="450" HorizontalOptions="Center" StrokeThickness="0">
+                                <Border x:Name="ProgressBarFill" StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="1" HorizontalOptions="Start" VerticalOptions="Center" StrokeThickness="0">
+                                    <Grid WidthRequest="450" HeightRequest="24" HorizontalOptions="Start" VerticalOptions="Center" IsClippedToBounds="True">
+                                        <HorizontalStackLayout x:Name="StripesGrid" Spacing="15" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="1500" InputTransparent="True">
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </Border>
+
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center" Margin="0,15,0,0">
+                                <Label Text="{Binding TrainingStatusText}" FontSize="16" TextColor="#1F2937" FontFamily="TTNormsRegular" HorizontalOptions="Center" />
+                                <Label Text="{Binding TimeRemainingText}" FontSize="14" TextColor="#8B3DFF" FontFamily="TTNormsBold" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="15" IsVisible="{Binding IsTrainingCompleted}">
+
+                    <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
+                            <Label Text="4" TextColor="White" FontSize="12" FontFamily="TTNormsBold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Exporter le modèle" FontSize="18" TextColor="#1F2937" FontFamily="TTNormsBold" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <Border StrokeShape="RoundRectangle 12" Stroke="#A7F3D0" StrokeThickness="1.5" BackgroundColor="#F0FDF4" WidthRequest="600" Padding="25">
+                        <VerticalStackLayout Spacing="20">
+
+                            <HorizontalStackLayout Spacing="15" VerticalOptions="Center">
+                                <Border StrokeShape="RoundRectangle 12" BackgroundColor="#10B981" HeightRequest="30" WidthRequest="30" StrokeThickness="0">
+                                    <Image Source="succes_icon.png" HeightRequest="18" WidthRequest="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+
+                                <VerticalStackLayout VerticalOptions="Center">
+                                    <Label Text="Entraînement terminé!" FontSize="16" TextColor="#065F46" FontFamily="TTNormsBold" />
+                                    <Label Text="Votre modèle est prêt à être exporté" FontSize="14" TextColor="#047857" FontFamily="TTNormsRegular" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <Button x:Name="ExportButton"
+                                    Text="Exporter le modèle"
+                                    Command="{Binding ExportModelCommand}"
+                                    Style="{StaticResource AnimatedButtonStyle}"
+                                    WidthRequest="300"
+                                    HeightRequest="55"
+                                    FontSize="16"
+                                    HorizontalOptions="Center"
+                                    Pressed="OnExportButtonPressed"
+                                    Released="OnExportButtonReleased">
+                                <Button.GestureRecognizers>
+                                    <PointerGestureRecognizer PointerEntered="OnExportButtonEntered" PointerExited="OnExportButtonExited" />
+                                </Button.GestureRecognizers>
+                            </Button>
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

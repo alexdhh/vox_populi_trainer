@@ -9,6 +9,8 @@ global using System.Text;
 global using System.Text.Json;
 global using System.Text.Json.Serialization;
 global using System.Net.Http.Json;
+global using System.IO;
+global using System.IO.Compression;
 
 global using System.Collections.Generic;
 global using System.Collections.Specialized;
@@ -31,5 +33,14 @@ global using CommunityToolkit.Mvvm.Input;
 global using CommunityToolkit.Mvvm.Messaging;
 global using CommunityToolkit.Mvvm.Messaging.Messages;
 global using CommunityToolkit.Maui;
+global using Microsoft.Maui.Controls.Shapes;
+global using Microsoft.Maui.Controls.Xaml;
+global using CommunityToolkit.Maui.Storage;
+
+global using Microsoft.ML;
+global using Microsoft.ML.Data;
+global using Microsoft.ML.Trainers;
+global using Microsoft.ML.Transforms;
 
 global using vox_populi_trainer.ViewModels;
+global using vox_populi_trainer.Views;

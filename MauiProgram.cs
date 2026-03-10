@@ -12,10 +12,23 @@
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+
+                    fonts.AddFont("TTNormsPro-Regular.ttf", "TTNormsRegular");
+                    fonts.AddFont("TTNormsPro-Normal.ttf", "TTNormsNormal");
+                    fonts.AddFont("TTNormsPro-Bold.ttf", "TTNormsBold");
+                    fonts.AddFont("TTNormsPro-Thin.ttf", "TTNormsThin");
                 });
 
             builder.Services.AddTransient<MainPageViewModel>();
             builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<ChoicePageViewModel>();
+            builder.Services.AddTransient<ChoicePage>();
+            builder.Services.AddTransient<CreateModelPageViewModel>();
+            builder.Services.AddTransient<CreateModelPage>();
+            builder.Services.AddTransient<GenerateDataPageViewModel>();
+            builder.Services.AddTransient<GenerateDataPage>();
+            builder.Services.AddTransient<TestModelPageViewModel>();
+            builder.Services.AddTransient<TestModelPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();

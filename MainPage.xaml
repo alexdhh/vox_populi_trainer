@@ -2,12 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="vox_populi_trainer.MainPage"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="White">
 
     <ContentPage.Resources>
         <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#A855F7" Offset="0.0" />
             <GradientStop Color="#7E22CE" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="DarkerGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#7E22CE" Offset="0.0" />
+            <GradientStop Color="#581C87" Offset="1.0" />
         </LinearGradientBrush>
 
         <Style x:Key="AnimatedButtonStyle" TargetType="Button">
@@ -25,17 +31,12 @@
                     <VisualStateGroup x:Name="CommonStates">
                         <VisualState x:Name="Normal">
                             <VisualState.Setters>
-                                <Setter Property="Scale" Value="1.0" />
+                                <Setter Property="Background" Value="{StaticResource PrimaryGradient}" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="PointerOver">
                             <VisualState.Setters>
-                                <Setter Property="Scale" Value="1.05" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="Pressed">
-                            <VisualState.Setters>
-                                <Setter Property="Scale" Value="0.95" />
+                                <Setter Property="Background" Value="{StaticResource DarkerGradient}" />
                             </VisualState.Setters>
                         </VisualState>
                     </VisualStateGroup>
@@ -57,7 +58,7 @@
             <Border.Shadow>
                 <Shadow Brush="#A855F7" Opacity="0.3" Radius="20" Offset="0,5" />
             </Border.Shadow>
-            <Image Source="mic_icon.png" 
+            <Image Source="brain_icon.png" 
                    HeightRequest="35" 
                    WidthRequest="35" 
                    VerticalOptions="Center" 
@@ -65,17 +66,25 @@
         </Border>
 
         <Label Text="Vox Populi 4.0"
-               FontSize="34"
+               FontFamily="TTNormsNormal"
+               FontSize="38"
                TextColor="#8B3DFF"
                HorizontalOptions="Center" />
 
-        <Button Text="Commencer"
+        <Button x:Name="StartButton"
+                Text="Commencer"
                 Command="{Binding StartCommand}"
                 Style="{StaticResource AnimatedButtonStyle}"
                 WidthRequest="220"
                 HeightRequest="55"
+                FontFamily="TTNormsRegular"
                 FontSize="16"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center">
+            <Button.GestureRecognizers>
+                <PointerGestureRecognizer PointerEntered="OnPointerEntered" 
+                                          PointerExited="OnPointerExited" />
+            </Button.GestureRecognizers>
+        </Button>
 
     </VerticalStackLayout>
 

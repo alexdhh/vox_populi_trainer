@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="vox_populi_trainer.Views.ChoicePage"
+             Shell.NavBarIsVisible="False"
+             Title="ChoicePage">
+
+    <ContentPage.Resources>
+        <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#A855F7" Offset="0.0" />
+            <GradientStop Color="#7E22CE" Offset="1.0" />
+        </LinearGradientBrush>
+
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+            <Setter Property="Stroke" Value="#E5E7EB" />
+            <Setter Property="StrokeThickness" Value="1.5" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="Padding" Value="24" />
+            <Setter Property="WidthRequest" Value="320" />
+            <Setter Property="HeightRequest" Value="280" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *">
+
+        <VerticalStackLayout Grid.Row="0" Padding="30" Spacing="5" HorizontalOptions="Start">
+
+            <Grid HorizontalOptions="Start" Margin="10,0,0,20">
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ReturnCommand}" />
+                    <PointerGestureRecognizer PointerEntered="OnBackPointerEntered" PointerExited="OnBackPointerExited" />
+                </Grid.GestureRecognizers>
+
+                <Border x:Name="BackButtonBorder"
+                        StrokeShape="RoundRectangle 22"
+                        HeightRequest="32"
+                        WidthRequest="32"
+                        BackgroundColor="#F3F4F6"
+                        StrokeThickness="0"
+                        InputTransparent="True">
+
+                    <Image Source="return_icon.png" 
+                           HeightRequest="17" 
+                           WidthRequest="17" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"
+                           InputTransparent="True" />
+                </Border>
+            </Grid>
+
+            <Label Text="Vox Populi 4.0"
+               FontFamily="TTNormsNormal"
+               FontSize="28" 
+               TextColor="#8B3DFF" 
+               Margin="10,0,0,0"
+               FontAttributes="Bold"/>
+
+            <Label Text="Choisissez une option pour continuer" 
+               FontSize="14"
+               FontFamily="TTNormsRegular"
+               Margin="10,0,0,0"
+               TextColor="#6B7280" />
+
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout Grid.Row="1" Spacing="30" HorizontalOptions="Center" VerticalOptions="Center">
+
+            <Border Style="{StaticResource CardStyle}">
+                <Border.Shadow>
+                    <Shadow Brush="Transparent" Opacity="0" Radius="30" Offset="0,10" />
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToCreateModelCommand}" />
+                    <PointerGestureRecognizer PointerEntered="OnCardPointerEntered" PointerExited="OnCardPointerExited" />
+                </Border.GestureRecognizers>
+
+                <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Border StrokeShape="RoundRectangle 14" HeightRequest="64" WidthRequest="64" Background="{StaticResource PrimaryGradient}" StrokeThickness="0" HorizontalOptions="Center">
+                        <Image Source="cog_icon.png" 
+                               HeightRequest="32" 
+                               WidthRequest="32" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center" />
+                    </Border>
+
+                    <Label Text="Créer un modèle" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center" FontFamily="TTNormsNormal"/>
+                    <Label Text="Importez un dataset et entraînez un nouveau modèle d'IA personnalisé" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" FontFamily="TTNormsRegular"/>
+
+                    <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}">
+                <Border.Shadow>
+                    <Shadow Brush="Transparent" Opacity="0" Radius="30" Offset="0,10" />
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToCustomizeModelCommand}" />
+                    <PointerGestureRecognizer PointerEntered="OnCardPointerEntered" PointerExited="OnCardPointerExited" />
+                </Border.GestureRecognizers>
+
+                <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Border StrokeShape="RoundRectangle 14" HeightRequest="64" WidthRequest="64" Background="{StaticResource PrimaryGradient}" StrokeThickness="0" HorizontalOptions="Center">
+                        <Image Source="star_icon.png" 
+                               HeightRequest="32" 
+                               WidthRequest="32" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center" />
+                    </Border>
+
+                    <Label Text="Générer des données" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center" FontFamily="TTNormsNormal"/>
+                    <Label Text="Générez un dataset synthétique avec le nombre d'échantillons de votre choix" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" FontFamily="TTNormsRegular"/>
+
+                    <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource CardStyle}">
+                <Border.Shadow>
+                    <Shadow Brush="Transparent" Opacity="0" Radius="30" Offset="0,10" />
+                </Border.Shadow>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToTestModelCommand}" />
+                    <PointerGestureRecognizer PointerEntered="OnCardPointerEntered" PointerExited="OnCardPointerExited" />
+                </Border.GestureRecognizers>
+
+                <VerticalStackLayout Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
+                    <Border StrokeShape="RoundRectangle 14" HeightRequest="64" WidthRequest="64" Background="{StaticResource PrimaryGradient}" StrokeThickness="0" HorizontalOptions="Center">
+                        <Image Source="test_icon.png" 
+                               HeightRequest="32" 
+                               WidthRequest="32" 
+                               HorizontalOptions="Center" 
+                               VerticalOptions="Center" />
+                    </Border>
+
+                    <Label Text="Tester un modèle" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center" FontFamily="TTNormsNormal"/>
+                    <Label Text="Importez un modèle et testez ses prédictions en temps réel" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" FontFamily="TTNormsRegular"/>
+
+                    <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>
