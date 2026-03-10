@@ -26,28 +26,40 @@
 
         <VerticalStackLayout Grid.Row="0" Padding="30" Spacing="5" HorizontalOptions="Start">
 
-            <HorizontalStackLayout Spacing="8" 
-                               HorizontalOptions="Start" 
-                               AnchorX="0" 
-                               Margin="10,0,0,20">
-                <HorizontalStackLayout.GestureRecognizers>
+            <Grid HorizontalOptions="Start" Margin="10,0,0,20">
+
+                <Grid.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ReturnCommand}" />
-                    <PointerGestureRecognizer PointerEntered="OnReturnPointerEntered" 
-                                          PointerExited="OnReturnPointerExited" />
-                </HorizontalStackLayout.GestureRecognizers>
+                    <PointerGestureRecognizer PointerEntered="OnBackPointerEntered" PointerExited="OnBackPointerExited" />
+                </Grid.GestureRecognizers>
 
-                <Label x:Name="BackIcon" Text="←" FontSize="18" TextColor="#4B5563" VerticalOptions="Center"/>
-                <Label x:Name="BackText" Text="Retour" FontSize="16" TextColor="#4B5563" VerticalOptions="Center"/>
-            </HorizontalStackLayout>
+                <Border x:Name="BackButtonBorder"
+                        StrokeShape="RoundRectangle 22"
+                        HeightRequest="32"
+                        WidthRequest="32"
+                        BackgroundColor="#F3F4F6"
+                        StrokeThickness="0"
+                        InputTransparent="True">
 
-            <Label Text="Vox Populi 4.0" 
+                    <Image Source="return_icon.png" 
+                           HeightRequest="17" 
+                           WidthRequest="17" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"
+                           InputTransparent="True" />
+                </Border>
+            </Grid>
+
+            <Label Text="Vox Populi 4.0"
+               FontFamily="TTNormsNormal"
                FontSize="28" 
                TextColor="#8B3DFF" 
                Margin="10,0,0,0"
-               FontAttributes="Bold" />
+               FontAttributes="Bold"/>
 
             <Label Text="Choisissez une option pour continuer" 
-               FontSize="14" 
+               FontSize="14"
+               FontFamily="TTNormsRegular"
                Margin="10,0,0,0"
                TextColor="#6B7280" />
 
@@ -73,8 +85,8 @@
                                VerticalOptions="Center" />
                     </Border>
 
-                    <Label Text="Créer un modèle" FontSize="20" FontAttributes="Bold" TextColor="#1F2937" HorizontalOptions="Center" />
-                    <Label Text="Importez un dataset et entraînez un nouveau modèle d'IA personnalisé" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" />
+                    <Label Text="Créer un modèle" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center" FontFamily="TTNormsNormal"/>
+                    <Label Text="Importez un dataset et entraînez un nouveau modèle d'IA personnalisé" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" FontFamily="TTNormsRegular"/>
 
                     <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
                 </VerticalStackLayout>
@@ -98,8 +110,8 @@
                                VerticalOptions="Center" />
                     </Border>
 
-                    <Label Text="Générer des données" FontSize="20" FontAttributes="Bold" TextColor="#1F2937" HorizontalOptions="Center" />
-                    <Label Text="Générez un dataset synthétique avec le nombre d'échantillons de votre choix" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" />
+                    <Label Text="Générer des données" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center" FontFamily="TTNormsNormal"/>
+                    <Label Text="Générez un dataset synthétique avec le nombre d'échantillons de votre choix" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" FontFamily="TTNormsRegular"/>
 
                     <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
                 </VerticalStackLayout>
@@ -123,8 +135,8 @@
                                VerticalOptions="Center" />
                     </Border>
 
-                    <Label Text="Tester un modèle" FontSize="20" FontAttributes="Bold" TextColor="#1F2937" HorizontalOptions="Center" />
-                    <Label Text="Importez un modèle et testez ses prédictions en temps réel" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" />
+                    <Label Text="Tester un modèle" FontSize="20" TextColor="#1F2937" HorizontalOptions="Center" FontFamily="TTNormsNormal"/>
+                    <Label Text="Importez un modèle et testez ses prédictions en temps réel" FontSize="14" TextColor="#6B7280" HorizontalTextAlignment="Center" LineHeight="1.2" FontFamily="TTNormsRegular"/>
 
                     <BoxView HeightRequest="2" WidthRequest="35" Color="#A855F7" HorizontalOptions="Center" Opacity="0" Margin="0,15,0,0" />
                 </VerticalStackLayout>

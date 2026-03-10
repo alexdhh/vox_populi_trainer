@@ -12,6 +12,11 @@
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+
+                    fonts.AddFont("TTNormsPro-Regular.ttf", "TTNormsRegular");
+                    fonts.AddFont("TTNormsPro-Normal.ttf", "TTNormsNormal");
+                    fonts.AddFont("TTNormsPro-Bold.ttf", "TTNormsBold");
+                    fonts.AddFont("TTNormsPro-Thin.ttf", "TTNormsThin");
                 });
 
             builder.Services.AddTransient<MainPageViewModel>();

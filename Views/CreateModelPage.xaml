@@ -10,21 +10,61 @@
             <GradientStop Color="#A855F7" Offset="0.0" />
             <GradientStop Color="#7E22CE" Offset="1.0" />
         </LinearGradientBrush>
+
+        <Style x:Key="AnimatedButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryGradient}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="FontFamily" Value="TTNormsBold" />
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="#A855F7" Opacity="0.3" Radius="15" Offset="0,6" />
+                </Setter.Value>
+            </Setter>
+        </Style>
     </ContentPage.Resources>
 
     <ScrollView>
         <Grid RowDefinitions="Auto, *">
+
             <VerticalStackLayout Grid.Row="0" Padding="30" Spacing="5" HorizontalOptions="Start">
-                <HorizontalStackLayout Spacing="8" HorizontalOptions="Start" AnchorX="0" Margin="10,0,0,20">
-                    <HorizontalStackLayout.GestureRecognizers>
+
+                <Grid HorizontalOptions="Start" Margin="10,0,0,20">
+
+                    <Grid.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ReturnCommand}" />
                         <PointerGestureRecognizer PointerEntered="OnBackPointerEntered" PointerExited="OnBackPointerExited" />
-                    </HorizontalStackLayout.GestureRecognizers>
-                    <Label x:Name="BackIcon" Text="←" FontSize="18" TextColor="#4B5563" VerticalOptions="Center"/>
-                    <Label x:Name="BackText" Text="Retour" FontSize="16" TextColor="#4B5563" VerticalOptions="Center"/>
-                </HorizontalStackLayout>
-                <Label Text="Créer mon modèle" FontSize="28" TextColor="#8B3DFF" Margin="10,0,0,0" FontAttributes="Bold" />
-                <Label Text="Suivez les étapes pour créer votre modèle d'IA personnalisé" FontSize="14" Margin="10,0,0,0" TextColor="#6B7280" />
+                    </Grid.GestureRecognizers>
+
+                    <Border x:Name="BackButtonBorder"
+                        StrokeShape="RoundRectangle 22"
+                        HeightRequest="32"
+                        WidthRequest="32"
+                        BackgroundColor="#F3F4F6"
+                        StrokeThickness="0"
+                        InputTransparent="True">
+
+                        <Image Source="return_icon.png" 
+                           HeightRequest="17" 
+                           WidthRequest="17" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"
+                           InputTransparent="True" />
+                    </Border>
+                </Grid>
+
+                <Label Text="Créer mon modèle" 
+                       FontSize="28" 
+                       TextColor="#8B3DFF" 
+                       Margin="10,0,0,0"
+                       FontAttributes="Bold"
+                       FontFamily="TTNormsNormal"/>
+
+                <Label Text="Suivez les étapes pour créer votre modèle d'IA personnalisé" 
+                       FontSize="14" 
+                       Margin="10,0,0,0" 
+                       TextColor="#6B7280" 
+                       FontFamily="TTNormsRegular" />
             </VerticalStackLayout>
 
             <VerticalStackLayout Grid.Row="1" Spacing="40" HorizontalOptions="Center" Margin="0,20,0,50">
@@ -32,9 +72,9 @@
                 <VerticalStackLayout Spacing="15">
                     <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
                         <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
-                            <Label Text="1" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="1" TextColor="White" FontSize="12" FontFamily="TTNormsBold" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
-                        <Label Text="Importer un dataset" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                        <Label Text="Importer un dataset" FontSize="18" TextColor="#1F2937" FontFamily="TTNormsBold" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <Border x:Name="UploadBorder" StrokeShape="RoundRectangle 12" Stroke="#D1D5DB" StrokeThickness="1" StrokeDashArray="4,4" BackgroundColor="White" WidthRequest="600" HeightRequest="180">
@@ -64,8 +104,8 @@
                                         </Image.Triggers>
                                     </Image>
                                 </Border>
-                                <Label Text="{Binding UploadText}" FontSize="16" TextColor="#4B5563" FontAttributes="Bold" HorizontalOptions="Center" />
-                                <Label Text="{Binding SubText}" FontSize="12" TextColor="#9CA3AF" HorizontalOptions="Center" />
+                                <Label Text="{Binding UploadText}" FontSize="16" TextColor="#1F2937" FontFamily="TTNormsBold" HorizontalOptions="Center" />
+                                <Label Text="{Binding SubText}" FontSize="12" TextColor="#9CA3AF" FontFamily="TTNormsRegular" HorizontalOptions="Center" />
                             </VerticalStackLayout>
                             <BoxView BackgroundColor="Transparent">
                                 <BoxView.GestureRecognizers>
@@ -81,9 +121,9 @@
                 <VerticalStackLayout Spacing="15" IsVisible="{Binding IsFileLoaded}">
                     <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
                         <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
-                            <Label Text="2" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="2" TextColor="White" FontSize="12" FontFamily="TTNormsBold" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
-                        <Label Text="Choisir un modèle" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                        <Label Text="Choisir un modèle" FontSize="18" TextColor="#1F2937" FontFamily="TTNormsBold" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <Grid x:Name="ModelsGrid" RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*, *" ColumnSpacing="15" RowSpacing="15" WidthRequest="600">
@@ -117,8 +157,8 @@
                                         </Ellipse>
                                     </Border>
                                     <VerticalStackLayout>
-                                        <Label Text="LbfgsRegressionOva" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Linéaire One-vs-All, bon équilibre" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="LbfgsRegressionOva" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Linéaire One-vs-All, bon équilibre" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -159,8 +199,8 @@
                                         </Ellipse>
                                     </Border>
                                     <VerticalStackLayout>
-                                        <Label Text="LbfgsMaximumEntropy" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Entropie max, excellent pour le texte" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="LbfgsMaximumEntropy" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Entropie max, excellent pour le texte" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -201,8 +241,8 @@
                                         </Ellipse>
                                     </Border>
                                     <VerticalStackLayout>
-                                        <Label Text="LightGbm" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Arbres boostés, très rapide et précis" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="LightGbm" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Arbres boostés, très rapide et précis" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -243,8 +283,8 @@
                                         </Ellipse>
                                     </Border>
                                     <VerticalStackLayout>
-                                        <Label Text="SdcaMaximumEntropy" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Entropie max optimisée (grands datasets)" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="SdcaMaximumEntropy" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Entropie max optimisée (grands datasets)" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -285,8 +325,8 @@
                                         </Ellipse>
                                     </Border>
                                     <VerticalStackLayout>
-                                        <Label Text="LbfgsLogisticRegression" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Régression logistique classique et robuste" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="LbfgsLogisticRegression" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Régression logistique classique et robuste" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -327,8 +367,8 @@
                                         </Ellipse>
                                     </Border>
                                     <VerticalStackLayout>
-                                        <Label Text="FastTree" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Arbres de décision (Gradient boosting)" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="FastTree" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Arbres de décision (Gradient boosting)" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -369,8 +409,8 @@
                                         </Ellipse>
                                     </Border>
                                     <VerticalStackLayout>
-                                        <Label Text="SdcaLogisticRegression" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Descente de gradient stochastique" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="SdcaLogisticRegression" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Descente de gradient stochastique" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -411,8 +451,8 @@
                                         </Ellipse>
                                     </Border>
                                     <VerticalStackLayout>
-                                        <Label Text="FastForest" FontSize="15" TextColor="#1F2937" FontAttributes="Bold" />
-                                        <Label Text="Forêt aléatoire, anti-surapprentissage" FontSize="12" TextColor="#6B7280" />
+                                        <Label Text="FastForest" FontSize="15" TextColor="#1F2937" FontFamily="TTNormsBold" />
+                                        <Label Text="Forêt aléatoire, anti-surapprentissage" FontSize="12" TextColor="#6B7280" FontFamily="TTNormsRegular" />
                                     </VerticalStackLayout>
                                 </HorizontalStackLayout>
                                 <BoxView BackgroundColor="Transparent">
@@ -429,10 +469,7 @@
                     <Button x:Name="StartTrainingButton"
                             Text="Commencer l'entraînement"
                             Command="{Binding StartTrainingCommand}"
-                            Background="{StaticResource PrimaryGradient}"
-                            TextColor="White"
-                            CornerRadius="12"
-                            FontAttributes="Bold"
+                            Style="{StaticResource AnimatedButtonStyle}"
                             WidthRequest="300"
                             HeightRequest="55"
                             FontSize="16"
@@ -454,43 +491,20 @@
                 <VerticalStackLayout Spacing="15" IsVisible="{Binding IsTrainingStarted}">
                     <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
                         <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
-                            <Label Text="3" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="3" TextColor="White" FontSize="12" FontFamily="TTNormsBold" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
-                        <Label Text="Entraîner le modèle" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                        <Label Text="Entraîner le modèle" FontSize="18" TextColor="#1F2937" FontFamily="TTNormsBold" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <Border StrokeShape="RoundRectangle 12" Stroke="#E5E7EB" StrokeThickness="1.5" BackgroundColor="White" WidthRequest="600" Padding="50">
                         <VerticalStackLayout Spacing="25" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="450">
 
-                            <Label Text="{Binding ProgressPercentage}" FontSize="32" TextColor="#8B3DFF" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Label Text="{Binding ProgressPercentage}" FontSize="32" TextColor="#8B3DFF" FontFamily="TTNormsBold" HorizontalOptions="Center" />
 
                             <Border x:Name="ProgressBarContainer" StrokeShape="RoundRectangle 12" BackgroundColor="#E5E7EB" HeightRequest="24" WidthRequest="450" HorizontalOptions="Center" StrokeThickness="0">
-
                                 <Border x:Name="ProgressBarFill" StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="1" HorizontalOptions="Start" VerticalOptions="Center" StrokeThickness="0">
-
                                     <Grid WidthRequest="450" HeightRequest="24" HorizontalOptions="Start" VerticalOptions="Center" IsClippedToBounds="True">
-
                                         <HorizontalStackLayout x:Name="StripesGrid" Spacing="15" VerticalOptions="Center" HorizontalOptions="Start" WidthRequest="1500" InputTransparent="True">
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
-                                            <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
                                             <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
                                             <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
                                             <BoxView WidthRequest="15" HeightRequest="40" BackgroundColor="White" Opacity="0.15" Rotation="30" VerticalOptions="Center" />
@@ -517,8 +531,8 @@
                             </Border>
 
                             <VerticalStackLayout Spacing="8" HorizontalOptions="Center" Margin="0,15,0,0">
-                                <Label Text="{Binding TrainingStatusText}" FontSize="16" TextColor="#1F2937" HorizontalOptions="Center" />
-                                <Label Text="{Binding TimeRemainingText}" FontSize="14" TextColor="#8B3DFF" FontAttributes="Bold" HorizontalOptions="Center" />
+                                <Label Text="{Binding TrainingStatusText}" FontSize="16" TextColor="#1F2937" FontFamily="TTNormsRegular" HorizontalOptions="Center" />
+                                <Label Text="{Binding TimeRemainingText}" FontSize="14" TextColor="#8B3DFF" FontFamily="TTNormsBold" HorizontalOptions="Center" />
                             </VerticalStackLayout>
 
                         </VerticalStackLayout>
@@ -529,9 +543,9 @@
 
                     <HorizontalStackLayout Spacing="10" HorizontalOptions="Start">
                         <Border StrokeShape="RoundRectangle 12" BackgroundColor="#8B3DFF" HeightRequest="24" WidthRequest="24" StrokeThickness="0">
-                            <Label Text="4" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="4" TextColor="White" FontSize="12" FontFamily="TTNormsBold" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
-                        <Label Text="Exporter le modèle" FontSize="18" TextColor="Black" VerticalOptions="Center"/>
+                        <Label Text="Exporter le modèle" FontSize="18" TextColor="#1F2937" FontFamily="TTNormsBold" VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
                     <Border StrokeShape="RoundRectangle 12" Stroke="#A7F3D0" StrokeThickness="1.5" BackgroundColor="#F0FDF4" WidthRequest="600" Padding="25">
@@ -543,18 +557,15 @@
                                 </Border>
 
                                 <VerticalStackLayout VerticalOptions="Center">
-                                    <Label Text="Entraînement terminé!" FontSize="16" TextColor="#065F46" FontAttributes="Bold" />
-                                    <Label Text="Votre modèle est prêt à être exporté" FontSize="14" TextColor="#047857" />
+                                    <Label Text="Entraînement terminé!" FontSize="16" TextColor="#065F46" FontFamily="TTNormsBold" />
+                                    <Label Text="Votre modèle est prêt à être exporté" FontSize="14" TextColor="#047857" FontFamily="TTNormsRegular" />
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
 
                             <Button x:Name="ExportButton"
                                     Text="Exporter le modèle"
                                     Command="{Binding ExportModelCommand}"
-                                    Background="{StaticResource PrimaryGradient}"
-                                    TextColor="White"
-                                    CornerRadius="12"
-                                    FontAttributes="Bold"
+                                    Style="{StaticResource AnimatedButtonStyle}"
                                     WidthRequest="300"
                                     HeightRequest="55"
                                     FontSize="16"
@@ -564,9 +575,6 @@
                                 <Button.GestureRecognizers>
                                     <PointerGestureRecognizer PointerEntered="OnExportButtonEntered" PointerExited="OnExportButtonExited" />
                                 </Button.GestureRecognizers>
-                                <Button.Shadow>
-                                    <Shadow Brush="#A855F7" Opacity="0.3" Radius="15" Offset="0,6" />
-                                </Button.Shadow>
                             </Button>
                         </VerticalStackLayout>
                     </Border>

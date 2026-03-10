@@ -20,18 +20,17 @@ public partial class TestModelPage : ContentPage
         }
     }
 
-    private async void OnBackPointerEntered(object sender, PointerEventArgs e)
+    private void OnBackPointerEntered(object sender, PointerEventArgs e)
     {
-        BackIcon.TextColor = Colors.Black;
-        BackText.TextColor = Colors.Black;
-        if (sender is View view) await view.ScaleTo(1.05, 150, Easing.CubicOut);
+        BackButtonBorder.BackgroundColor = Microsoft.Maui.Graphics.Color.Parse("#E5E7EB");
+
+        BackButtonBorder.ScaleTo(1.1, 150, Easing.CubicOut);
     }
 
-    private async void OnBackPointerExited(object sender, PointerEventArgs e)
+    private void OnBackPointerExited(object sender, PointerEventArgs e)
     {
-        BackIcon.TextColor = Color.FromArgb("#4B5563");
-        BackText.TextColor = Color.FromArgb("#4B5563");
-        if (sender is View view) await view.ScaleTo(1.0, 150, Easing.CubicIn);
+        BackButtonBorder.BackgroundColor = Microsoft.Maui.Graphics.Color.Parse("#F3F4F6");
+        BackButtonBorder.ScaleTo(1.0, 150, Easing.CubicIn);
     }
 
     private async void OnPointerEntered(object sender, PointerEventArgs e)
