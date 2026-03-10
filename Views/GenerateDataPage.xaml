@@ -52,7 +52,7 @@
                     </Border>
                 </Grid>
 
-                <Label Text="Générer des données" FontSize="28" TextColor="#8B3DFF" Margin="10,0,0,0" FontFamily="TTNormsBold" />
+                <Label Text="Générer des données" FontSize="28" TextColor="#8B3DFF" Margin="10,0,0,0" FontFamily="TTNormsNormal" FontAttributes="Bold"/>
                 <Label Text="Générez un dataset synthétique" FontSize="14" Margin="10,0,0,0" TextColor="#6B7280" FontFamily="TTNormsRegular" />
             </VerticalStackLayout>
 
@@ -78,7 +78,7 @@
                                            WidthRequest="120" 
                                            HorizontalTextAlignment="Center"
                                            TextColor="#8B3DFF"
-                                           FontSize="18"
+                                           FontSize="14"
                                            FontFamily="TTNormsBold"/>
                                 </Border>
                             </HorizontalStackLayout>
